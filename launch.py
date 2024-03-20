@@ -4,7 +4,7 @@ from handle import autoworkHandle
 from handle import byhandworkHandle
 from pysql import *
 
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
+from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QTableWidgetItem
 import mysql.connector as con
 
 speed_dc = {
@@ -64,6 +64,7 @@ class UI():
     def startauto(self):
         self.autoUI.hide()
         self.autoworkUI.show()
+        self.insert_table_auto()
     
     def back_to_main(self):
         self.autoUI.hide()
@@ -93,17 +94,36 @@ class UI():
     def byhand(self):
         self.programUi.hide()
         self.byhandworkUI.show()
-    
+        self.insert_table_byhand()
     def set_speed_byh(self):
         dc = self.byhanworkHandle.comboBox.currentText()
         speed_dc[dc] = int(self.byhanworkHandle.plainTextEdit.toPlainText())
         print(speed_dc)
     
-    def insert_table(self):
+    def insert_table_auto(self):
         mydb = MY_DB()
         mydb.connect("data.db")
-        self.autoworkHandle.tbl_auw.setRowCount
-    
+        self.autoworkHandle.tbl_quantity.setRowCount(0)
+        self.result = mydb.select_all("products")
+        label = mydb.get_table_columns("products") 
+        self.autoworkHandle.tbl_quantity.setHorizontalHeaderLabels(label)
+        for row_num, row_data in enumerate(self.result):
+            self.autoworkHandle.tbl_quantity.insertRow(row_num)
+            for col_num, col_data in enumerate(row_data):
+                self.autoworkHandle.tbl_quantity.setItem(row_num, col_num, QTableWidgetItem(str(col_data))) 
+        mydb.close()
+    def insert_table_byhand(self):
+        mydb = MY_DB()
+        mydb.connect("data.db")
+        self.byhanworkHandle.tbl_quantity.setRowCount(0)
+        self.result = mydb.select_all("products")
+        label = mydb.get_table_columns("products") 
+        self.byhanworkHandle.tbl_quantity.setHorizontalHeaderLabels(label)
+        for row_num, row_data in enumerate(self.result):
+            self.byhanworkHandle.tbl_quantity.insertRow(row_num)
+            for col_num, col_data in enumerate(row_data):
+                self.byhanworkHandle.tbl_quantity.setItem(row_num, col_num, QTableWidgetItem(str(col_data))) 
+        mydb.close()
 if __name__ == "__main__":
     app = QApplication([])
     ui = UI()
