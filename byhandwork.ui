@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>701</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:rgb(235, 238, 255)</string>
+  </property>
+  <widget class="QLabel" name="lbl_byh_02">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>70</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string>Tốc độ động cơ</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_byh_set">
+   <property name="geometry">
+    <rect>
+     <x>480</x>
+     <y>70</y>
+     <width>81</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(255, 255, 127);</string>
+   </property>
+   <property name="text">
+    <string>Đặt</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>70</y>
+     <width>161</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>Động cơ 1</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Động cơ 2</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Động cơ 3</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Động cơ 4</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Động cơ 5</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Động cơ 6</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Động cơ 7</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Động cơ 8</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Động cơ 9</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Động cơ 10</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QPushButton" name="btn_byh_up">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>180</y>
+     <width>81</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(255, 255, 127);</string>
+   </property>
+   <property name="text">
+    <string>Trên</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_byh_left">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>220</y>
+     <width>81</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(255, 255, 127);</string>
+   </property>
+   <property name="text">
+    <string>Trái</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_byh_down">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>260</y>
+     <width>81</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(255, 255, 127);</string>
+   </property>
+   <property name="text">
+    <string>Dưới</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_byh_right">
+   <property name="geometry">
+    <rect>
+     <x>700</x>
+     <y>220</y>
+     <width>81</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(255, 255, 127);</string>
+   </property>
+   <property name="text">
+    <string>Phải</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_byh_05">
+   <property name="geometry">
+    <rect>
+     <x>540</x>
+     <y>130</y>
+     <width>131</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string>Hướng phân loại</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_byh_03">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>140</y>
+     <width>81</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string>Loại hàng</string>
+   </property>
+  </widget>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>140</y>
+     <width>371</width>
+     <height>231</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_byh_04">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>400</y>
+     <width>81</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string>Số lượng</string>
+   </property>
+  </widget>
+  <widget class="QTableView" name="tableView">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>400</y>
+     <width>561</width>
+     <height>271</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(251, 255, 205)</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_byh_01">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>10</y>
+     <width>141</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>20</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(200, 255, 176);</string>
+   </property>
+   <property name="text">
+    <string>Thủ công</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_byh_back">
+   <property name="geometry">
+    <rect>
+     <x>670</x>
+     <y>20</y>
+     <width>111</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(85, 255, 127)</string>
+   </property>
+   <property name="text">
+    <string>Quay lại</string>
+   </property>
+  </widget>
+  <widget class="QPlainTextEdit" name="plainTextEdit">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>70</y>
+     <width>101</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="plainText">
+    <string/>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

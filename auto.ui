@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>589</width>
+    <height>450</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:rgb(235, 238, 255)</string>
+  </property>
+  <widget class="QPushButton" name="btn_auto_set">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>100</y>
+     <width>91</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(255, 255, 127);</string>
+   </property>
+   <property name="text">
+    <string>Đặt</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_auto_02">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>100</y>
+     <width>131</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string>Tốc độ phân loại</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="cb_auto_speed">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>100</y>
+     <width>141</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>Nhanh</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Thường</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Chậm</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QPushButton" name="btn_auto_back">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>230</y>
+     <width>91</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(255, 255, 127);</string>
+   </property>
+   <property name="text">
+    <string>Quay lại</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_auto_start">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>230</y>
+     <width>91</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(255, 255, 127);</string>
+   </property>
+   <property name="text">
+    <string>Bắt đầu</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_auto_01">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>20</y>
+     <width>121</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>20</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(200, 255, 176);</string>
+   </property>
+   <property name="text">
+    <string>Tự động</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
