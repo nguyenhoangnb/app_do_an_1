@@ -4,6 +4,7 @@ from handle import autoworkHandle
 from handle import byhandworkHandle
 from pysql import *
 
+from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QTableWidgetItem
 import mysql.connector as con
 
@@ -54,7 +55,10 @@ class UI():
         self.byhanworkHandle.btn_byh_set.clicked.connect(lambda: self.set_speed_byh())
         
         self.programUi.show()
-
+        self.timer = QTimer()
+        self.timer.timeout.connect(lambda:self.insert_table_auto())
+        self.timer.timeout.connect(lambda:self.insert_table_byhand())
+        self.timer.start(10)
 
     
     def automation(self):
@@ -64,7 +68,9 @@ class UI():
     def startauto(self):
         self.autoUI.hide()
         self.autoworkUI.show()
-        self.insert_table_auto()
+        self.timer = QTimer()
+        self.timer.timeout.connect(lambda:self.insert_table_auto())
+        self.timer.start(10)
     
     def back_to_main(self):
         self.autoUI.hide()
@@ -94,7 +100,10 @@ class UI():
     def byhand(self):
         self.programUi.hide()
         self.byhandworkUI.show()
-        self.insert_table_byhand()
+        self.timer = QTimer()
+        self.timer.timeout.connect(lambda:self.insert_table_byhand())
+        self.timer.start(10)
+        
     def set_speed_byh(self):
         dc = self.byhanworkHandle.comboBox.currentText()
         speed_dc[dc] = int(self.byhanworkHandle.plainTextEdit.toPlainText())
