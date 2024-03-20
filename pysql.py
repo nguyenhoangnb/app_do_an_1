@@ -60,7 +60,16 @@ class MY_DB():
         query = f"SELECT * FROM {table_name}"
         self.result = cursor.execute(query)
         return self.result
+    def get_table_columns(self, table_name):
+        cursor = self.conn.cursor()
 
+        cursor.execute("PRAGMA table_info({})".format(table_name))
+
+        columns = cursor.fetchall()
+
+        columns_list = [column[1] for column in columns]
+
+        return columns_list
 #### code sử dụng classs MY_DB()
 #Create table
 # database_properties = {
