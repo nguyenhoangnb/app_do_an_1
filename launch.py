@@ -3,9 +3,9 @@ from handle import programHandle
 from handle import autoworkHandle
 from handle import byhandworkHandle
 from pysql import *
-
+import re
 from PyQt5.QtCore import QTimer
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QTableWidgetItem
+from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QTableWidgetItem, QMessageBox
 import mysql.connector as con
 
 speed_dc = {
@@ -105,8 +105,13 @@ class UI():
         self.timer.start(10)
         
     def set_speed_byh(self):
-        dc = self.byhanworkHandle.comboBox.currentText()
-        speed_dc[dc] = int(self.byhanworkHandle.plainTextEdit.toPlainText())
+        dc = self.byhanworkHandle.plainTextEdit.toPlainText()
+        idx = self.byhanworkHandle.comboBox.currentText()
+        if (not self.kiem_tra(dc)):
+            print(dc)
+            self.byhanworkHandle.plainTextEdit.setPlainText("0")
+          
+        speed_dc[idx] = int(self.byhanworkHandle.plainTextEdit.toPlainText())
         print(speed_dc)
     
     def insert_table_auto(self):
@@ -133,6 +138,8 @@ class UI():
             for col_num, col_data in enumerate(row_data):
                 self.byhanworkHandle.tbl_quantity.setItem(row_num, col_num, QTableWidgetItem(str(col_data))) 
         mydb.close()
+    def kiem_tra(self,xau):
+        return bool(re.match(r'^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$', xau))
 if __name__ == "__main__":
     app = QApplication([])
     ui = UI()
