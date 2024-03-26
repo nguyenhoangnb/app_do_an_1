@@ -7,6 +7,8 @@ import re
 from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QTableWidgetItem, QMessageBox
 import mysql.connector as con
+# import rospy
+# from std_msgs import *
 
 speed_dc = {
     "Động cơ 1":0,
