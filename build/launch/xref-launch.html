@@ -18,7 +18,8 @@
   <a target="code" href="///D:/UI/System/launch.py" type="text/plain"><tt>launch.py</tt></a>
 <span class="moduletype">Script</span>  <div class="import">
 imports:
-    <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
+    <a href="#PyQt5.QtCore">PyQt5.QtCore</a>
+ &#8226;   <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
  &#8226;   <a href="#_bootlocale">_bootlocale</a>
  &#8226;   <a href="#_collections_abc">_collections_abc</a>
  &#8226;   <a href="#_weakrefset">_weakrefset</a>
@@ -167,6 +168,7 @@ imports:
  &#8226;   <a href="#pyi_rth_multiprocessing.py">pyi_rth_multiprocessing.py</a>
  &#8226;   <a href="#pyi_rth_pkgutil.py">pyi_rth_pkgutil.py</a>
  &#8226;   <a href="#pyi_rth_pyqt5.py">pyi_rth_pyqt5.py</a>
+ &#8226;   <a href="#pysql">pysql</a>
  &#8226;   <a href="#re">re</a>
  &#8226;   <a href="#reprlib">reprlib</a>
  &#8226;   <a href="#sre_compile">sre_compile</a>
@@ -377,6 +379,7 @@ imported by:
  &#8226;   <a href="#auto">auto</a>
  &#8226;   <a href="#autowork">autowork</a>
  &#8226;   <a href="#byhandwork">byhandwork</a>
+ &#8226;   <a href="#launch.py">launch.py</a>
  &#8226;   <a href="#program">program</a>
 
   </div>
@@ -1170,6 +1173,16 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="_sqlite3"></a>
+  <tt>_sqlite3</tt> <span class="moduletype"><tt>C:\Users\nhh2k\AppData\Local\Programs\Python\Python39\DLLs\_sqlite3.pyd</tt></span>  <div class="import">
+imported by:
+    <a href="#sqlite3.dbapi2">sqlite3.dbapi2</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="_sre"></a>
   <tt>_sre</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imports:
@@ -1943,6 +1956,7 @@ imported by:
  &#8226;   <a href="#mysql.opentelemetry.attributes">mysql.opentelemetry.attributes</a>
  &#8226;   <a href="#mysql.opentelemetry.sdk.util">mysql.opentelemetry.sdk.util</a>
  &#8226;   <a href="#selectors">selectors</a>
+ &#8226;   <a href="#sqlite3.dbapi2">sqlite3.dbapi2</a>
  &#8226;   <a href="#tracemalloc">tracemalloc</a>
  &#8226;   <a href="#typing">typing</a>
  &#8226;   <a href="#typing_extensions">typing_extensions</a>
@@ -2287,6 +2301,7 @@ imported by:
  &#8226;   <a href="#mysql.connector.protocol">mysql.connector.protocol</a>
  &#8226;   <a href="#mysql.connector.types">mysql.connector.types</a>
  &#8226;   <a href="#mysql.opentelemetry.sdk.util">mysql.opentelemetry.sdk.util</a>
+ &#8226;   <a href="#sqlite3.dbapi2">sqlite3.dbapi2</a>
  &#8226;   <a href="#xmlrpc.client">xmlrpc.client</a>
 
   </div>
@@ -9611,6 +9626,22 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="pysql"></a>
+  <a target="code" href="///D:/UI/System/pysql.py" type="text/plain"><tt>pysql</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#sqlite3">sqlite3</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#launch.py">launch.py</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="queue"></a>
   <a target="code" href="///C:/Users/nhh2k/AppData/Local/Programs/Python/Python39/lib/queue.py" type="text/plain"><tt>queue</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
@@ -9993,6 +10024,63 @@ imported by:
  &#8226;   <a href="#ssl">ssl</a>
  &#8226;   <a href="#urllib.request">urllib.request</a>
  &#8226;   <a href="#uuid">uuid</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="sqlite3"></a>
+  <a target="code" href="///C:/Users/nhh2k/AppData/Local/Programs/Python/Python39/lib/sqlite3/__init__.py" type="text/plain"><tt>sqlite3</tt></a>
+<span class="moduletype">Package</span>  <div class="import">
+imports:
+    <a href="#sqlite3">sqlite3</a>
+ &#8226;   <a href="#sqlite3.dbapi2">sqlite3.dbapi2</a>
+ &#8226;   <a href="#sqlite3.dump">sqlite3.dump</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#pysql">pysql</a>
+ &#8226;   <a href="#sqlite3">sqlite3</a>
+ &#8226;   <a href="#sqlite3.dbapi2">sqlite3.dbapi2</a>
+ &#8226;   <a href="#sqlite3.dump">sqlite3.dump</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="sqlite3.dbapi2"></a>
+  <a target="code" href="///C:/Users/nhh2k/AppData/Local/Programs/Python/Python39/lib/sqlite3/dbapi2.py" type="text/plain"><tt>sqlite3.dbapi2</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#_sqlite3">_sqlite3</a>
+ &#8226;   <a href="#collections.abc">collections.abc</a>
+ &#8226;   <a href="#datetime">datetime</a>
+ &#8226;   <a href="#sqlite3">sqlite3</a>
+ &#8226;   <a href="#time">time</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#sqlite3">sqlite3</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="sqlite3.dump"></a>
+  <a target="code" href="///C:/Users/nhh2k/AppData/Local/Programs/Python/Python39/lib/sqlite3/dump.py" type="text/plain"><tt>sqlite3.dump</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#sqlite3">sqlite3</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#sqlite3">sqlite3</a>
 
   </div>
 
@@ -10556,6 +10644,7 @@ imported by:
  &#8226;   <a href="#pprint">pprint</a>
  &#8226;   <a href="#queue">queue</a>
  &#8226;   <a href="#random">random</a>
+ &#8226;   <a href="#sqlite3.dbapi2">sqlite3.dbapi2</a>
  &#8226;   <a href="#ssl">ssl</a>
  &#8226;   <a href="#subprocess">subprocess</a>
  &#8226;   <a href="#tarfile">tarfile</a>
