@@ -4,11 +4,18 @@ from handle import autoworkHandle
 from handle import byhandworkHandle
 from pysql import *
 import re
-from PyQt5.QtCore import QTimer
+
+from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QTableWidgetItem, QMessageBox
+
+
 import mysql.connector as con
-# import rospy
-# from std_msgs import *
+from PyQt5.QtGui import QImage, QPixmap
+import rospy
+import cv2
+from cv_bridge import CvBridge, CvBridgeError
+from sensor_msgs.msg import Image
+
 
 speed_dc = {
     "Động cơ 1":0,
@@ -31,18 +38,18 @@ class UI():
         
         self.speed_dc = speed_dc
         self.speed_dc_pred = self.speed_dc
-        
+        #program UI
         self.programUi = QMainWindow()
         self.programHandle = programHandle(self.programUi)
         self.programHandle.btn_pro_auto.clicked.connect(lambda:self.automation())
         self.programHandle.btn_pr_byhand.clicked.connect(lambda:self.byhand())
-        
+        # Auto Ui
         self.autoUI = QMainWindow()
         self.autoHandle = autoHandle(self.autoUI)
         self.autoHandle.btn_auto_start.clicked.connect(lambda:self.startauto())
         self.autoHandle.btn_auto_back.clicked.connect(lambda:self.back_to_main())
         self.autoHandle.btn_auto_set.clicked.connect(lambda:self.set_speed())
-        
+        #Autowork UI
         self.autoworkUI = QMainWindow()
         self.autoworkHandle = autoworkHandle(self.autoworkUI)
         self.autoworkHandle.btn_auw_stop.clicked.connect(lambda: self.stop_auto())
@@ -50,11 +57,13 @@ class UI():
         self.autoworkHandle.btn_auw_change.clicked.connect(lambda: self.back_to_main())
         self.autoworkHandle.btn_auw_continue.hide()
         self.autoworkHandle.btn_auw_continue.clicked.connect(lambda: self.continue_auto())
-        
+        #ByhandWork UI
         self.byhandworkUI = QMainWindow()
         self.byhanworkHandle = byhandworkHandle(self.byhandworkUI)
         self.byhanworkHandle.btn_byh_back.clicked.connect(lambda:self.back_to_main())
         self.byhanworkHandle.btn_byh_set.clicked.connect(lambda: self.set_speed_byh())
+        #Topic name
+        self.topic_img = "image_raw"
         
         self.programUi.show()
         self.timer = QTimer()
@@ -62,23 +71,61 @@ class UI():
         self.timer.timeout.connect(lambda:self.insert_table_byhand())
         self.timer.start(10)
 
-    
+ 
+    # Enable UI
+    def enable(self, state):
+        if state == 1:
+            self.autoUI.setEnabled(True)
+            self.autoworkUI.setEnabled(False)
+            self.programUi.setEnabled(False)
+            self.byhandworkUI.setEnabled(False)
+        if state == 2:
+            self.autoUI.setEnabled(False)
+            self.autoworkUI.setEnabled(True)
+            self.programUi.setEnabled(False)
+            self.byhandworkUI.setEnabled(False)
+        if state == 3:
+            self.autoUI.setEnabled(False)
+            self.autoworkUI.setEnabled(False)
+            self.programUi.setEnabled(True)
+            self.byhandworkUI.setEnabled(False)
+        if state == 4:
+            self.autoUI.setEnabled(False)
+            self.autoworkUI.setEnabled(False)
+            self.programUi.setEnabled(False)
+            self.byhandworkUI.setEnabled(True)
+    # Change between modes
     def automation(self):
         self.programUi.hide()
         self.autoUI.show()
-    
+        
     def startauto(self):
         self.autoUI.hide()
         self.autoworkUI.show()
         self.timer = QTimer()
         self.timer.timeout.connect(lambda:self.insert_table_auto())
         self.timer.start(10)
+        self.bridge = CvBridge()
+        rospy.init_node("img_node", anonymous=True)
+        
+        self.sub = rospy.Subscriber(
+            self.topic_img,
+            Image,
+            self.sub_callback
+        )
+
+        self.timer.timeout.connect(self.update_image)
+        self.timer.start(100)  # Update every 100 milliseconds (adjust as needed)
+        
+        
     
     def back_to_main(self):
         self.autoUI.hide()
         self.autoworkUI.hide()
         self.byhandworkUI.hide()
         self.programUi.show()
+        
+        
     
     def set_speed(self):
         pass
@@ -98,6 +145,8 @@ class UI():
     def back_auto_work(self):
         self.autoworkUI.hide()
         self.autoUI.show()
+        
+        
     
     def byhand(self):
         self.programUi.hide()
@@ -105,6 +154,8 @@ class UI():
         self.timer = QTimer()
         self.timer.timeout.connect(lambda:self.insert_table_byhand())
         self.timer.start(10)
+        
+        
         
     def set_speed_byh(self):
         dc = self.byhanworkHandle.plainTextEdit.toPlainText()
@@ -115,7 +166,8 @@ class UI():
           
         speed_dc[idx] = int(self.byhanworkHandle.plainTextEdit.toPlainText())
         print(speed_dc)
-    
+        
+    #insert table
     def insert_table_auto(self):
         mydb = MY_DB()
         mydb.connect("data.db")
@@ -140,8 +192,23 @@ class UI():
             for col_num, col_data in enumerate(row_data):
                 self.byhanworkHandle.tbl_quantity.setItem(row_num, col_num, QTableWidgetItem(str(col_data))) 
         mydb.close()
+        
     def kiem_tra(self,xau):
         return bool(re.match(r'^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$', xau))
+    
+    def sub_callback(self, image):
+        cv_image = self.bridge.imgmsg_to_cv2(image)
+        cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
+        h, w, ch = cv_image.shape
+        bytes_per_line = ch * w
+        qt_img = QImage(cv_image.data, w, h, bytes_per_line, QImage.Format_RGB888)
+        pixmap = QPixmap.fromImage(qt_img)
+        self.autoworkHandle.lbl_img.setPixmap(pixmap.scaled(self.autoworkHandle.lbl_img.size(), Qt.KeepAspectRatio))
+
+    def update_image(self):
+        
+        pass
+    
 if __name__ == "__main__":
     app = QApplication([])
     ui = UI()
