@@ -4,7 +4,7 @@ from handle import autoworkHandle
 from handle import byhandworkHandle
 from pysql import *
 import re
-
+import json
 from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QTableWidgetItem, QMessageBox
 import imutils
@@ -16,7 +16,7 @@ import rospy
 import cv2
 from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import Image
-from std_msgs.msg import Int16
+from std_msgs.msg import Int16, String
 
 speed_dc = {
     "Động cơ 1":0,
@@ -61,8 +61,12 @@ def detect_shape(contour):
 class UI():
     def __init__(self):
         
+        self.idx = 0
         self.speed_dc = speed_dc
         self.speed_dc_pred = self.speed_dc
+        
+        self.speed_module = speed_module
+        self.speed_module_pred = speed_module
         #program UI
         self.programUi = QMainWindow()
         self.programHandle = programHandle(self.programUi)
@@ -86,18 +90,33 @@ class UI():
         self.byhandworkUI = QMainWindow()
         self.byhanworkHandle = byhandworkHandle(self.byhandworkUI)
         self.byhanworkHandle.btn_byh_back.clicked.connect(lambda:self.back_to_main())
-        self.byhanworkHandle.btn_byh_set.clicked.connect(lambda: self.set_speed_byh())
+        self.byhanworkHandle.btn_byh_set.clicked.connect(lambda: self.set_speed_byh(self.idx))
+        self.byhanworkHandle.btn_byh_start.clicked.connect(lambda: self.start_byhand())
+        self.byhanworkHandle.btn_byh_stop.clicked.connect(lambda: self.stop_byhand())
+        self.byhanworkHandle.btn_byh_continue.clicked.connect(lambda: self.continue_byhand())
+        
         #Topic name
         self.topic_img = "image_raw"
         self.topic_speed_auto = "speed_auto"
+        self.topic_speed_by_module = "speed_module"
+        self.topic_speed_by_motor = "speed_motor"
         self.bridge = CvBridge()
         
-        self.idx = 0
         self.programUi.show()
         self.timer = QTimer()
         # self.timer.timeout.connect(lambda:self.insert_table_auto())
         # self.timer.timeout.connect(lambda:self.insert_table_byhand())
         # self.timer.start(10)
+        self.pub_speed_motor = rospy.Publisher(
+            self.topic_speed_by_motor,
+            String,
+            queue_size=10
+        )
+        self.pub_speed_module = rospy.Publisher(
+            self.topic_speed_by_module,
+            String,
+            queue_size=10
+        )
 
  
     # Enable UI
@@ -152,8 +171,7 @@ class UI():
         self.byhandworkUI.hide()
         self.programUi.show()
     
-    def create_combo_box_byh(self):
-        pass    
+   
     
     #set speed auto
     def set_speed_auto(self):
@@ -181,10 +199,7 @@ class UI():
         # except rospy.ROSInterruptException:
         #     rospy.signal_shutdown("ROSInterruptExeption")
 
-    #Set speed byhand
-    def set_speed_byhand(self):
-        
-        pass 
+ 
     
     def stop_auto(self):
         self.speed_dc_pred = self.speed_dc
@@ -203,12 +218,12 @@ class UI():
         self.autoUI.show()
         
         
-    
     def byhand(self):
         self.programUi.hide()
         self.byhandworkUI.show()
         self.timer = QTimer()
         self.timer.timeout.connect(lambda:self.insert_table_byhand())
+        self.byhanworkHandle.btn_byh_continue.hide()
         rospy.init_node("img_node", anonymous=True)
         
         self.sub = rospy.Subscriber(
@@ -220,7 +235,8 @@ class UI():
         self.timer.timeout.connect(self.update_image)
         self.timer.start(100)  
         self.byhanworkHandle.cbox_fun.currentIndexChanged.connect(self.byhand_change)
-        self.byhanworkHandle.btn_byh_set.clicked.connect(lambda: self.set_speed_byh(self.idx))
+        # self.byhanworkHandle.btn_byh_set.clicked.connect(lambda: self.set_speed_byh(self.idx))
+        
     
     def byhand_change(self, idx):
         print(idx)
@@ -233,15 +249,19 @@ class UI():
         self.idx = idx
         
     def set_speed_byh(self, current_idx):
+        # rospy.init_node("ros_speed", anonymous=True)
+        
         if current_idx == 1:
+            
             dc = self.byhanworkHandle.plt_speed.toPlainText()
             idx = self.byhanworkHandle.cb_motor.currentText()
             if (not self.kiem_tra(dc)):
                 print(dc)
                 self.byhanworkHandle.plt_speed.setPlainText("0")
             else:
-                speed_dc[idx] = int(self.byhanworkHandle.plt_speed.toPlainText())
-            print(speed_dc)
+                self.speed_dc[idx] = int(self.byhanworkHandle.plt_speed.toPlainText())
+                
+            print(self.speed_dc)
         elif current_idx == 0:
             mod_speed = self.byhanworkHandle.plt_speed.toPlainText()
             idx_mod = self.byhanworkHandle.cb_box_module.currentText()
@@ -249,9 +269,50 @@ class UI():
             if not self.kiem_tra(mod_speed):
                 self.byhanworkHandle.plt_speed.setPlainText("0")
             else:
-                speed_module[idx_mod] = int(self.byhanworkHandle.plt_speed.toPlainText())
+                self.speed_module[idx_mod] = int(self.byhanworkHandle.plt_speed.toPlainText())
             print(mod_speed)
-        
+            
+    def start_byhand(self):
+        self.byhanworkHandle.btn_byh_continue.hide()
+
+        if self.idx == 0:
+            json_data = json.dumps(self.speed_module)
+            self.pub_speed_module.publish(json_data)
+        elif self.idx == 1:
+            json_data = json.dumps(self.speed_dc)
+            self.pub_speed_motor.publish(json_data)
+            
+    def stop_byhand(self):
+        self.byhanworkHandle.btn_byh_stop.hide()
+        self.byhanworkHandle.btn_byh_continue.show()
+
+        if self.idx == 0:
+            self.speed_module_pred = self.speed_module
+            for x in self.speed_module:
+                self.speed_module[x] = 0
+            json_data = json.dumps(self.speed_module)
+            self.pub_speed_module.publish(json_data)
+        elif self.idx == 1:
+            self.speed_dc_pred = self.speed_dc
+            for x in self.speed_dc:
+                self.speed_dc[x] = 0
+            json_data = json.dumps(self.speed_dc)
+            self.pub_speed_motor.publish(json_data)
+            
+    
+    def continue_byhand(self):
+        self.byhanworkHandle.btn_byh_stop.show()
+        self.byhanworkHandle.btn_byh_continue.hide()
+
+        if self.idx == 0:
+            self.speed_module = self.speed_module_pred
+            json_data = json.dumps(self.speed_module)
+            self.pub_speed_module.publish(json_data)
+        elif self.idx == 1:
+            self.speed_dc = self.speed_dc_pred
+            json_data = json.dumps(self.speed_dc)
+            self.pub_speed_motor.publish(json_data)
+    
     #insert table
     def insert_table_auto(self):
         mydb = MY_DB()
