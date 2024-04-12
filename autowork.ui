@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1127</width>
-    <height>700</height>
+    <height>699</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -217,8 +217,8 @@
     <rect>
      <x>340</x>
      <y>120</y>
-     <width>301</width>
-     <height>221</height>
+     <width>320</width>
+     <height>240</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -249,32 +249,6 @@
     <string>Thông tin hàng</string>
    </property>
   </widget>
-  <widget class="QTextEdit" name="textEdit">
-   <property name="geometry">
-    <rect>
-     <x>850</x>
-     <y>60</y>
-     <width>211</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
-   </property>
-  </widget>
-  <widget class="QTextEdit" name="textEdit_2">
-   <property name="geometry">
-    <rect>
-     <x>850</x>
-     <y>170</y>
-     <width>211</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="lbl_auw_4">
    <property name="geometry">
     <rect>
@@ -294,19 +268,6 @@
    </property>
    <property name="text">
     <string>Thông tin hàng</string>
-   </property>
-  </widget>
-  <widget class="QTextEdit" name="textEdit_3">
-   <property name="geometry">
-    <rect>
-     <x>850</x>
-     <y>280</y>
-     <width>211</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_auw_5">
@@ -330,24 +291,11 @@
     <string>Thông tin hàng</string>
    </property>
   </widget>
-  <widget class="QTextEdit" name="textEdit_4">
-   <property name="geometry">
-    <rect>
-     <x>850</x>
-     <y>390</y>
-     <width>211</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="lbl_auw_6">
    <property name="geometry">
     <rect>
      <x>680</x>
-     <y>390</y>
+     <y>380</y>
      <width>121</width>
      <height>41</height>
     </rect>
@@ -362,26 +310,13 @@
    </property>
    <property name="text">
     <string>Thông tin hàng</string>
-   </property>
-  </widget>
-  <widget class="QTextEdit" name="textEdit_5">
-   <property name="geometry">
-    <rect>
-     <x>850</x>
-     <y>490</y>
-     <width>211</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_auw_7">
    <property name="geometry">
     <rect>
      <x>680</x>
-     <y>490</y>
+     <y>480</y>
      <width>121</width>
      <height>41</height>
     </rect>
@@ -396,6 +331,86 @@
    </property>
    <property name="text">
     <string>Thông tin hàng</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_inf_4">
+   <property name="geometry">
+    <rect>
+     <x>830</x>
+     <y>380</y>
+     <width>240</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_inf_1">
+   <property name="geometry">
+    <rect>
+     <x>830</x>
+     <y>60</y>
+     <width>240</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_inf_5">
+   <property name="geometry">
+    <rect>
+     <x>830</x>
+     <y>480</y>
+     <width>240</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_inf_3">
+   <property name="geometry">
+    <rect>
+     <x>830</x>
+     <y>280</y>
+     <width>240</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_inf_2">
+   <property name="geometry">
+    <rect>
+     <x>830</x>
+     <y>170</y>
+     <width>240</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>
