@@ -41,7 +41,16 @@ speed_module = {
     "Module 4":0
 }
 
+
 pre_data = {
+    "key1":"asdsa",
+    "key2":"asdsa",
+    "key3":"asdsa",
+    "key4":"asdsa",
+    "key5":"asdssa"
+}
+
+data = {
     "key1":"asdsa",
     "key2":"asdsa",
     "key3":"asdsa",
@@ -72,7 +81,7 @@ class UI():
         self.idx = 0
         self.speed_dc = speed_dc
         self.speed_dc_pred = self.speed_dc
-        self.data = pre_data
+        self.data = data
         self.prev_data = pre_data
         
         self.speed_module = speed_module
@@ -391,7 +400,7 @@ class UI():
         #     print("Day la: ", end="")
         #     print(self.data)
         #     self.classify_product(self.data)
-        if not check:
+        if check:
             labels = [
                 self.byhanworkHandle.lbl_inf_1,
                 self.byhanworkHandle.lbl_inf_2,
@@ -440,8 +449,8 @@ class UI():
       
         for key in self.data:
             if self.data[key] != self.prev_data[key]:
-                return False
-        return True
+                return True
+        return False
 
     def classify_product(self, qr_code_data ):
         my_db = MY_DB()
