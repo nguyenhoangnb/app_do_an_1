@@ -19,7 +19,6 @@ from sensor_msgs.msg import Image
 from std_msgs.msg import Int16, String
 
 speed_dc = {
-<<<<<<< HEAD
     "Motor 1":0,
     "Motor 2":0,
     "Motor 3":0,
@@ -32,20 +31,6 @@ speed_dc = {
     "Motor 10":0,
     "Motor 11":0,
     "Motor 12":0,
-=======
-    "Động cơ 1":0,
-    "Động cơ 2":0,
-    "Động cơ 3":0,
-    "Động cơ 4":0,
-    "Động cơ 5":0,
-    "Động cơ 6":0,
-    "Động cơ 7":0,
-    "Động cơ 8":0,
-    "Động cơ 9":0,
-    "Động cơ 10":0,
-    "Động cơ 11":0,
-    "Động cơ 12":0,
->>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
     
 }
 
@@ -125,11 +110,7 @@ class UI():
         self.pub_speed_motor = rospy.Publisher(
             self.topic_speed_by_motor,
             String,
-<<<<<<< HEAD
             queue_size=20
-=======
-            queue_size=10
->>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
         )
         self.pub_speed_module = rospy.Publisher(
             self.topic_speed_by_module,
@@ -295,28 +276,18 @@ class UI():
         self.byhanworkHandle.btn_byh_continue.hide()
 
         if self.idx == 0:
-<<<<<<< HEAD
             json_data = json.dumps(self.speed_module, ensure_ascii=False)
             self.pub_speed_module.publish(json_data)
         elif self.idx == 1:
             json_data = json.dumps(self.speed_dc, ensure_ascii=False)
             self.pub_speed_motor.publish(json_data)
 
-=======
-            json_data = json.dumps(self.speed_module)
-            self.pub_speed_module.publish(json_data)
-        elif self.idx == 1:
-            json_data = json.dumps(self.speed_dc)
-            self.pub_speed_motor.publish(json_data)
-            
->>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
     def stop_byhand(self):
         self.byhanworkHandle.btn_byh_stop.hide()
         self.byhanworkHandle.btn_byh_continue.show()
 
         if self.idx == 0:
             self.speed_module_pred = self.speed_module
-<<<<<<< HEAD
             self.speed_module = {key: 0 for key in self.speed_module}  
             json_data = json.dumps(self.speed_module, ensure_ascii=False)
             self.pub_speed_module.publish(json_data)
@@ -326,39 +297,17 @@ class UI():
             json_data = json.dumps(self.speed_dc, ensure_ascii=False)
             self.pub_speed_motor.publish(json_data)
 
-=======
-            for x in self.speed_module:
-                self.speed_module[x] = 0
-            json_data = json.dumps(self.speed_module)
-            self.pub_speed_module.publish(json_data)
-        elif self.idx == 1:
-            self.speed_dc_pred = self.speed_dc
-            for x in self.speed_dc:
-                self.speed_dc[x] = 0
-            json_data = json.dumps(self.speed_dc)
-            self.pub_speed_motor.publish(json_data)
-            
-    
->>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
     def continue_byhand(self):
         self.byhanworkHandle.btn_byh_stop.show()
         self.byhanworkHandle.btn_byh_continue.hide()
 
         if self.idx == 0:
             self.speed_module = self.speed_module_pred
-<<<<<<< HEAD
             json_data = json.dumps(self.speed_module, ensure_ascii=False)
             self.pub_speed_module.publish(json_data)
         elif self.idx == 1:
             self.speed_dc = self.speed_dc_pred
             json_data = json.dumps(self.speed_dc, ensure_ascii=False)
-=======
-            json_data = json.dumps(self.speed_module)
-            self.pub_speed_module.publish(json_data)
-        elif self.idx == 1:
-            self.speed_dc = self.speed_dc_pred
-            json_data = json.dumps(self.speed_dc)
->>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
             self.pub_speed_motor.publish(json_data)
     
     #insert table
