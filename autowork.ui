@@ -7,7 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>1127</width>
+<<<<<<< HEAD
     <height>699</height>
+=======
+    <height>700</height>
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
    </rect>
   </property>
   <property name="windowTitle">
@@ -217,8 +221,13 @@
     <rect>
      <x>340</x>
      <y>120</y>
+<<<<<<< HEAD
      <width>320</width>
      <height>240</height>
+=======
+     <width>301</width>
+     <height>221</height>
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
     </rect>
    </property>
    <property name="styleSheet">
@@ -249,6 +258,7 @@
     <string>Thông tin hàng</string>
    </property>
   </widget>
+<<<<<<< HEAD
   <widget class="QLabel" name="lbl_auw_4">
    <property name="geometry">
     <rect>
@@ -275,6 +285,39 @@
     <rect>
      <x>680</x>
      <y>280</y>
+=======
+  <widget class="QTextEdit" name="textEdit">
+   <property name="geometry">
+    <rect>
+     <x>850</x>
+     <y>60</y>
+     <width>211</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_2">
+   <property name="geometry">
+    <rect>
+     <x>850</x>
+     <y>170</y>
+     <width>211</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_auw_4">
+   <property name="geometry">
+    <rect>
+     <x>680</x>
+     <y>170</y>
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
      <width>121</width>
      <height>41</height>
     </rect>
@@ -291,6 +334,7 @@
     <string>Thông tin hàng</string>
    </property>
   </widget>
+<<<<<<< HEAD
   <widget class="QLabel" name="lbl_auw_6">
    <property name="geometry">
     <rect>
@@ -317,6 +361,26 @@
     <rect>
      <x>680</x>
      <y>480</y>
+=======
+  <widget class="QTextEdit" name="textEdit_3">
+   <property name="geometry">
+    <rect>
+     <x>850</x>
+     <y>280</y>
+     <width>211</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_auw_5">
+   <property name="geometry">
+    <rect>
+     <x>680</x>
+     <y>280</y>
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
      <width>121</width>
      <height>41</height>
     </rect>
@@ -333,6 +397,7 @@
     <string>Thông tin hàng</string>
    </property>
   </widget>
+<<<<<<< HEAD
   <widget class="QLabel" name="lbl_inf_4">
    <property name="geometry">
     <rect>
@@ -340,11 +405,21 @@
      <y>380</y>
      <width>240</width>
      <height>80</height>
+=======
+  <widget class="QTextEdit" name="textEdit_4">
+   <property name="geometry">
+    <rect>
+     <x>850</x>
+     <y>390</y>
+     <width>211</width>
+     <height>70</height>
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color:#fff;</string>
    </property>
+<<<<<<< HEAD
    <property name="text">
     <string/>
    </property>
@@ -373,11 +448,28 @@
      <width>240</width>
      <height>80</height>
     </rect>
+=======
+  </widget>
+  <widget class="QLabel" name="lbl_auw_6">
+   <property name="geometry">
+    <rect>
+     <x>680</x>
+     <y>390</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
    </property>
    <property name="styleSheet">
     <string notr="true">background-color:#fff;</string>
    </property>
    <property name="text">
+<<<<<<< HEAD
     <string/>
    </property>
   </widget>
@@ -388,11 +480,24 @@
      <y>280</y>
      <width>240</width>
      <height>80</height>
+=======
+    <string>Thông tin hàng</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_5">
+   <property name="geometry">
+    <rect>
+     <x>850</x>
+     <y>490</y>
+     <width>211</width>
+     <height>70</height>
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color:#fff;</string>
    </property>
+<<<<<<< HEAD
    <property name="text">
     <string/>
    </property>
@@ -406,11 +511,32 @@
      <height>80</height>
     </rect>
    </property>
+=======
+  </widget>
+  <widget class="QLabel" name="lbl_auw_7">
+   <property name="geometry">
+    <rect>
+     <x>680</x>
+     <y>490</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
    <property name="styleSheet">
     <string notr="true">background-color:#fff;</string>
    </property>
    <property name="text">
+<<<<<<< HEAD
     <string/>
+=======
+    <string>Thông tin hàng</string>
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
    </property>
   </widget>
  </widget>

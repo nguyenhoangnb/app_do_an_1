@@ -89,7 +89,11 @@ class Ui_Form(object):
         self.lbl_byh_03.setStyleSheet("background-color:#fff;")
         self.lbl_byh_03.setObjectName("lbl_byh_03")
         self.lbl_byh_04 = QtWidgets.QLabel(Form)
+<<<<<<< HEAD
         self.lbl_byh_04.setGeometry(QtCore.QRect(40, 490, 81, 41))
+=======
+        self.lbl_byh_04.setGeometry(QtCore.QRect(30, 470, 81, 41))
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
         font = QtGui.QFont()
         font.setPointSize(12)
         self.lbl_byh_04.setFont(font)
@@ -118,11 +122,30 @@ class Ui_Form(object):
         self.plt_speed.setPlainText("")
         self.plt_speed.setObjectName("plt_speed")
         self.tbl_quantity = QtWidgets.QTableWidget(Form)
+<<<<<<< HEAD
         self.tbl_quantity.setGeometry(QtCore.QRect(150, 490, 421, 271))
+=======
+        self.tbl_quantity.setGeometry(QtCore.QRect(150, 470, 421, 271))
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
         self.tbl_quantity.setStyleSheet("background-color:rgb(251, 255, 205)")
         self.tbl_quantity.setRowCount(5)
         self.tbl_quantity.setColumnCount(4)
         self.tbl_quantity.setObjectName("tbl_quantity")
+<<<<<<< HEAD
+=======
+        self.txt_1 = QtWidgets.QTextEdit(Form)
+        self.txt_1.setGeometry(QtCore.QRect(880, 210, 231, 70))
+        self.txt_1.setStyleSheet("background-color:#fff;")
+        self.txt_1.setObjectName("txt_1")
+        self.txt_5 = QtWidgets.QTextEdit(Form)
+        self.txt_5.setGeometry(QtCore.QRect(880, 640, 231, 70))
+        self.txt_5.setStyleSheet("background-color:#fff;")
+        self.txt_5.setObjectName("txt_5")
+        self.txt_4 = QtWidgets.QTextEdit(Form)
+        self.txt_4.setGeometry(QtCore.QRect(880, 540, 231, 70))
+        self.txt_4.setStyleSheet("background-color:#fff;")
+        self.txt_4.setObjectName("txt_4")
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
         self.lbl_byh_6 = QtWidgets.QLabel(Form)
         self.lbl_byh_6.setGeometry(QtCore.QRect(720, 640, 121, 41))
         font = QtGui.QFont()
@@ -145,7 +168,11 @@ class Ui_Form(object):
         self.lbl_byh_2.setStyleSheet("background-color:#fff;")
         self.lbl_byh_2.setObjectName("lbl_byh_2")
         self.lbl_byh_3 = QtWidgets.QLabel(Form)
+<<<<<<< HEAD
         self.lbl_byh_3.setGeometry(QtCore.QRect(720, 320, 121, 41))
+=======
+        self.lbl_byh_3.setGeometry(QtCore.QRect(720, 330, 121, 41))
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
         font = QtGui.QFont()
         font.setPointSize(12)
         self.lbl_byh_3.setFont(font)
@@ -158,8 +185,21 @@ class Ui_Form(object):
         self.lbl_byh_5.setFont(font)
         self.lbl_byh_5.setStyleSheet("background-color:#fff;")
         self.lbl_byh_5.setObjectName("lbl_byh_5")
+<<<<<<< HEAD
         self.lbl_img = QtWidgets.QLabel(Form)
         self.lbl_img.setGeometry(QtCore.QRect(30, 230, 320, 240))
+=======
+        self.txt_2 = QtWidgets.QTextEdit(Form)
+        self.txt_2.setGeometry(QtCore.QRect(880, 320, 231, 70))
+        self.txt_2.setStyleSheet("background-color:#fff;")
+        self.txt_2.setObjectName("txt_2")
+        self.txt_3 = QtWidgets.QTextEdit(Form)
+        self.txt_3.setGeometry(QtCore.QRect(880, 430, 231, 70))
+        self.txt_3.setStyleSheet("background-color:#fff;")
+        self.txt_3.setObjectName("txt_3")
+        self.lbl_img = QtWidgets.QLabel(Form)
+        self.lbl_img.setGeometry(QtCore.QRect(30, 230, 341, 201))
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
         self.lbl_img.setStyleSheet("background-color:#fff")
         self.lbl_img.setText("")
         self.lbl_img.setObjectName("lbl_img")
@@ -204,6 +244,7 @@ class Ui_Form(object):
         self.btn_byh_continue.setFont(font)
         self.btn_byh_continue.setStyleSheet("background-color:rgb(223, 201, 104);")
         self.btn_byh_continue.setObjectName("btn_byh_continue")
+<<<<<<< HEAD
         self.lbl_inf_1 = QtWidgets.QLabel(Form)
         self.lbl_inf_1.setGeometry(QtCore.QRect(880, 210, 240, 80))
         self.lbl_inf_1.setStyleSheet("background-color:#fff;")
@@ -229,6 +270,8 @@ class Ui_Form(object):
         self.lbl_inf_5.setStyleSheet("background-color:#fff;")
         self.lbl_inf_5.setText("")
         self.lbl_inf_5.setObjectName("lbl_inf_5")
+=======
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -238,6 +281,7 @@ class Ui_Form(object):
         Form.setWindowTitle(_translate("Form", "Form"))
         self.lbl_byh_02.setText(_translate("Form", "Chỉnh tốc độ"))
         self.btn_byh_set.setText(_translate("Form", "Đặt"))
+<<<<<<< HEAD
         self.cb_motor.setItemText(0, _translate("Form", "Motor 1"))
         self.cb_motor.setItemText(1, _translate("Form", "Motor 2"))
         self.cb_motor.setItemText(2, _translate("Form", "Motor 3"))
@@ -248,6 +292,18 @@ class Ui_Form(object):
         self.cb_motor.setItemText(7, _translate("Form", "Motor 8"))
         self.cb_motor.setItemText(8, _translate("Form", "Motor 9"))
         self.cb_motor.setItemText(9, _translate("Form", "Motor 10"))
+=======
+        self.cb_motor.setItemText(0, _translate("Form", "Động cơ 1"))
+        self.cb_motor.setItemText(1, _translate("Form", "Động cơ 2"))
+        self.cb_motor.setItemText(2, _translate("Form", "Động cơ 3"))
+        self.cb_motor.setItemText(3, _translate("Form", "Động cơ 4"))
+        self.cb_motor.setItemText(4, _translate("Form", "Động cơ 5"))
+        self.cb_motor.setItemText(5, _translate("Form", "Động cơ 6"))
+        self.cb_motor.setItemText(6, _translate("Form", "Động cơ 7"))
+        self.cb_motor.setItemText(7, _translate("Form", "Động cơ 8"))
+        self.cb_motor.setItemText(8, _translate("Form", "Động cơ 9"))
+        self.cb_motor.setItemText(9, _translate("Form", "Động cơ 10"))
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
         self.btn_byh_up.setText(_translate("Form", "Trên"))
         self.btn_byh_left.setText(_translate("Form", "Trái"))
         self.btn_byh_down.setText(_translate("Form", "Dưới"))

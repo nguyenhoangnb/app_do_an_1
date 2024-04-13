@@ -13,7 +13,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
+<<<<<<< HEAD
         Form.resize(1127, 699)
+=======
+        Form.resize(1127, 700)
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
         Form.setStyleSheet("background-color:rgb(235, 238, 255)")
         self.lbl_auw_02 = QtWidgets.QLabel(Form)
         self.lbl_auw_02.setGeometry(QtCore.QRect(220, 60, 81, 41))
@@ -79,7 +83,11 @@ class Ui_Form(object):
         self.tbl_quantity.setColumnCount(4)
         self.tbl_quantity.setObjectName("tbl_quantity")
         self.lbl_img = QtWidgets.QLabel(Form)
+<<<<<<< HEAD
         self.lbl_img.setGeometry(QtCore.QRect(340, 120, 320, 240))
+=======
+        self.lbl_img.setGeometry(QtCore.QRect(340, 120, 301, 221))
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
         self.lbl_img.setStyleSheet("background-color:#fff;")
         self.lbl_img.setText("")
         self.lbl_img.setObjectName("lbl_img")
@@ -90,6 +98,17 @@ class Ui_Form(object):
         self.lbl_auw_3.setFont(font)
         self.lbl_auw_3.setStyleSheet("background-color:#fff;")
         self.lbl_auw_3.setObjectName("lbl_auw_3")
+<<<<<<< HEAD
+=======
+        self.textEdit = QtWidgets.QTextEdit(Form)
+        self.textEdit.setGeometry(QtCore.QRect(850, 60, 211, 70))
+        self.textEdit.setStyleSheet("background-color:#fff;")
+        self.textEdit.setObjectName("textEdit")
+        self.textEdit_2 = QtWidgets.QTextEdit(Form)
+        self.textEdit_2.setGeometry(QtCore.QRect(850, 170, 211, 70))
+        self.textEdit_2.setStyleSheet("background-color:#fff;")
+        self.textEdit_2.setObjectName("textEdit_2")
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
         self.lbl_auw_4 = QtWidgets.QLabel(Form)
         self.lbl_auw_4.setGeometry(QtCore.QRect(680, 170, 121, 41))
         font = QtGui.QFont()
@@ -97,6 +116,13 @@ class Ui_Form(object):
         self.lbl_auw_4.setFont(font)
         self.lbl_auw_4.setStyleSheet("background-color:#fff;")
         self.lbl_auw_4.setObjectName("lbl_auw_4")
+<<<<<<< HEAD
+=======
+        self.textEdit_3 = QtWidgets.QTextEdit(Form)
+        self.textEdit_3.setGeometry(QtCore.QRect(850, 280, 211, 70))
+        self.textEdit_3.setStyleSheet("background-color:#fff;")
+        self.textEdit_3.setObjectName("textEdit_3")
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
         self.lbl_auw_5 = QtWidgets.QLabel(Form)
         self.lbl_auw_5.setGeometry(QtCore.QRect(680, 280, 121, 41))
         font = QtGui.QFont()
@@ -104,20 +130,39 @@ class Ui_Form(object):
         self.lbl_auw_5.setFont(font)
         self.lbl_auw_5.setStyleSheet("background-color:#fff;")
         self.lbl_auw_5.setObjectName("lbl_auw_5")
+<<<<<<< HEAD
         self.lbl_auw_6 = QtWidgets.QLabel(Form)
         self.lbl_auw_6.setGeometry(QtCore.QRect(680, 380, 121, 41))
+=======
+        self.textEdit_4 = QtWidgets.QTextEdit(Form)
+        self.textEdit_4.setGeometry(QtCore.QRect(850, 390, 211, 70))
+        self.textEdit_4.setStyleSheet("background-color:#fff;")
+        self.textEdit_4.setObjectName("textEdit_4")
+        self.lbl_auw_6 = QtWidgets.QLabel(Form)
+        self.lbl_auw_6.setGeometry(QtCore.QRect(680, 390, 121, 41))
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
         font = QtGui.QFont()
         font.setPointSize(12)
         self.lbl_auw_6.setFont(font)
         self.lbl_auw_6.setStyleSheet("background-color:#fff;")
         self.lbl_auw_6.setObjectName("lbl_auw_6")
+<<<<<<< HEAD
         self.lbl_auw_7 = QtWidgets.QLabel(Form)
         self.lbl_auw_7.setGeometry(QtCore.QRect(680, 480, 121, 41))
+=======
+        self.textEdit_5 = QtWidgets.QTextEdit(Form)
+        self.textEdit_5.setGeometry(QtCore.QRect(850, 490, 211, 70))
+        self.textEdit_5.setStyleSheet("background-color:#fff;")
+        self.textEdit_5.setObjectName("textEdit_5")
+        self.lbl_auw_7 = QtWidgets.QLabel(Form)
+        self.lbl_auw_7.setGeometry(QtCore.QRect(680, 490, 121, 41))
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
         font = QtGui.QFont()
         font.setPointSize(12)
         self.lbl_auw_7.setFont(font)
         self.lbl_auw_7.setStyleSheet("background-color:#fff;")
         self.lbl_auw_7.setObjectName("lbl_auw_7")
+<<<<<<< HEAD
         self.lbl_inf_4 = QtWidgets.QLabel(Form)
         self.lbl_inf_4.setGeometry(QtCore.QRect(830, 380, 240, 80))
         self.lbl_inf_4.setStyleSheet("background-color:#fff;")
@@ -143,6 +188,8 @@ class Ui_Form(object):
         self.lbl_inf_2.setStyleSheet("background-color:#fff;")
         self.lbl_inf_2.setText("")
         self.lbl_inf_2.setObjectName("lbl_inf_2")
+=======
+>>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
