@@ -7,11 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1127</width>
-<<<<<<< HEAD
     <height>699</height>
-=======
-    <height>700</height>
->>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
    </rect>
   </property>
   <property name="windowTitle">
@@ -221,13 +217,8 @@
     <rect>
      <x>340</x>
      <y>120</y>
-<<<<<<< HEAD
      <width>320</width>
      <height>240</height>
-=======
-     <width>301</width>
-     <height>221</height>
->>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
     </rect>
    </property>
    <property name="styleSheet">
@@ -241,7 +232,7 @@
    <property name="geometry">
     <rect>
      <x>680</x>
-     <y>60</y>
+     <y>120</y>
      <width>121</width>
      <height>41</height>
     </rect>
@@ -258,12 +249,11 @@
     <string>Thông tin hàng</string>
    </property>
   </widget>
-<<<<<<< HEAD
   <widget class="QLabel" name="lbl_auw_4">
    <property name="geometry">
     <rect>
      <x>680</x>
-     <y>170</y>
+     <y>230</y>
      <width>121</width>
      <height>41</height>
     </rect>
@@ -284,40 +274,7 @@
    <property name="geometry">
     <rect>
      <x>680</x>
-     <y>280</y>
-=======
-  <widget class="QTextEdit" name="textEdit">
-   <property name="geometry">
-    <rect>
-     <x>850</x>
-     <y>60</y>
-     <width>211</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
-   </property>
-  </widget>
-  <widget class="QTextEdit" name="textEdit_2">
-   <property name="geometry">
-    <rect>
-     <x>850</x>
-     <y>170</y>
-     <width>211</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="lbl_auw_4">
-   <property name="geometry">
-    <rect>
-     <x>680</x>
-     <y>170</y>
->>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
+     <y>340</y>
      <width>121</width>
      <height>41</height>
     </rect>
@@ -334,12 +291,11 @@
     <string>Thông tin hàng</string>
    </property>
   </widget>
-<<<<<<< HEAD
   <widget class="QLabel" name="lbl_auw_6">
    <property name="geometry">
     <rect>
      <x>680</x>
-     <y>380</y>
+     <y>440</y>
      <width>121</width>
      <height>41</height>
     </rect>
@@ -360,27 +316,7 @@
    <property name="geometry">
     <rect>
      <x>680</x>
-     <y>480</y>
-=======
-  <widget class="QTextEdit" name="textEdit_3">
-   <property name="geometry">
-    <rect>
-     <x>850</x>
-     <y>280</y>
-     <width>211</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="lbl_auw_5">
-   <property name="geometry">
-    <rect>
-     <x>680</x>
-     <y>280</y>
->>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
+     <y>540</y>
      <width>121</width>
      <height>41</height>
     </rect>
@@ -397,29 +333,18 @@
     <string>Thông tin hàng</string>
    </property>
   </widget>
-<<<<<<< HEAD
   <widget class="QLabel" name="lbl_inf_4">
    <property name="geometry">
     <rect>
      <x>830</x>
-     <y>380</y>
+     <y>440</y>
      <width>240</width>
      <height>80</height>
-=======
-  <widget class="QTextEdit" name="textEdit_4">
-   <property name="geometry">
-    <rect>
-     <x>850</x>
-     <y>390</y>
-     <width>211</width>
-     <height>70</height>
->>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color:#fff;</string>
    </property>
-<<<<<<< HEAD
    <property name="text">
     <string/>
    </property>
@@ -428,7 +353,7 @@
    <property name="geometry">
     <rect>
      <x>830</x>
-     <y>60</y>
+     <y>120</y>
      <width>240</width>
      <height>80</height>
     </rect>
@@ -444,32 +369,15 @@
    <property name="geometry">
     <rect>
      <x>830</x>
-     <y>480</y>
+     <y>540</y>
      <width>240</width>
      <height>80</height>
     </rect>
-=======
-  </widget>
-  <widget class="QLabel" name="lbl_auw_6">
-   <property name="geometry">
-    <rect>
-     <x>680</x>
-     <y>390</y>
-     <width>121</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
->>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
    </property>
    <property name="styleSheet">
     <string notr="true">background-color:#fff;</string>
    </property>
    <property name="text">
-<<<<<<< HEAD
     <string/>
    </property>
   </widget>
@@ -477,27 +385,14 @@
    <property name="geometry">
     <rect>
      <x>830</x>
-     <y>280</y>
+     <y>340</y>
      <width>240</width>
      <height>80</height>
-=======
-    <string>Thông tin hàng</string>
-   </property>
-  </widget>
-  <widget class="QTextEdit" name="textEdit_5">
-   <property name="geometry">
-    <rect>
-     <x>850</x>
-     <y>490</y>
-     <width>211</width>
-     <height>70</height>
->>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color:#fff;</string>
    </property>
-<<<<<<< HEAD
    <property name="text">
     <string/>
    </property>
@@ -506,37 +401,48 @@
    <property name="geometry">
     <rect>
      <x>830</x>
-     <y>170</y>
+     <y>230</y>
      <width>240</width>
      <height>80</height>
     </rect>
    </property>
-=======
-  </widget>
-  <widget class="QLabel" name="lbl_auw_7">
-   <property name="geometry">
-    <rect>
-     <x>680</x>
-     <y>490</y>
-     <width>121</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
->>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
    <property name="styleSheet">
     <string notr="true">background-color:#fff;</string>
    </property>
    <property name="text">
-<<<<<<< HEAD
     <string/>
-=======
-    <string>Thông tin hàng</string>
->>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_axis">
+   <property name="geometry">
+    <rect>
+     <x>830</x>
+     <y>30</y>
+     <width>221</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_acc">
+   <property name="geometry">
+    <rect>
+     <x>680</x>
+     <y>30</y>
+     <width>91</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(216, 231, 33);</string>
+   </property>
+   <property name="text">
+    <string>Góc nghiêng</string>
    </property>
   </widget>
  </widget>

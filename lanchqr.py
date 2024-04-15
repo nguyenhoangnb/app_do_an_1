@@ -8,6 +8,7 @@ import json
 from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QTableWidgetItem, QMessageBox
 import imutils
+import math
 import numpy as np
 
 import mysql.connector as con
@@ -15,7 +16,7 @@ from PyQt5.QtGui import QImage, QPixmap
 import rospy
 import cv2
 from cv_bridge import CvBridge, CvBridgeError
-from sensor_msgs.msg import Image
+from sensor_msgs.msg import Image, Imu
 from std_msgs.msg import Int16, String
 
 speed_dc = {
@@ -113,6 +114,10 @@ class UI():
         self.byhanworkHandle.btn_byh_start.clicked.connect(lambda: self.start_byhand())
         self.byhanworkHandle.btn_byh_stop.clicked.connect(lambda: self.stop_byhand())
         self.byhanworkHandle.btn_byh_continue.clicked.connect(lambda: self.continue_byhand())
+        self.byhanworkHandle.btn_byh_left.clicked.connect(lambda: self.dic_left())
+        self.byhanworkHandle.btn_byh_right.clicked.connect(lambda: self.dic_right())
+        self.byhanworkHandle.btn_byh_up.clicked.connect(lambda: self.dic_up())
+        self.byhanworkHandle.btn_byh_down.clicked.connect(lambda: self.dic_dobtn_byh_down())
         
         #Topic name
         self.topic_img = "image_raw"
@@ -120,6 +125,7 @@ class UI():
         self.topic_speed_by_module = "speed_module"
         self.topic_speed_by_motor = "speed_motor"
         self.topic_direction = "direction"
+        self.topic_imu = "handsfree/imu"
         self.bridge = CvBridge()
         
         self.programUi.show()
@@ -176,16 +182,21 @@ class UI():
         self.autoworkUI.show()
         self.timer = QTimer()
         self.timer.timeout.connect(lambda:self.insert_table_auto())
-        self.timer.start(10)  
+        # self.timer.start(10)  
         
         self.sub = rospy.Subscriber(
             self.topic_img,
             Image,
             self.sub_callback
         )
+        self.sub_imu = rospy.Subscriber(
+            self.topic_imu,
+            Imu,
+            lambda msg: self.imuCallback(msg,1)
+        )
         
         self.timer.timeout.connect(self.update_image)
-        self.timer.start(100)  
+        self.timer.start(1000)  
         
         
     
@@ -246,9 +257,14 @@ class UI():
             Image,
             self.sub_callback_byh
         )
-        
+        self.sub_imu = rospy.Subscriber(
+            self.topic_imu,
+            Imu,
+            lambda msg: self.imuCallback(msg,2)
+        )
+        # rospy.Timer(rospy.Duration(1), self.update_image)
         self.timer.timeout.connect(self.update_image)
-        self.timer.start(100)  
+        self.timer.start(1000)  
         self.byhanworkHandle.cbox_fun.currentIndexChanged.connect(self.byhand_change)
         # self.byhanworkHandle.btn_byh_set.clicked.connect(lambda: self.set_speed_byh(self.idx))
         
@@ -364,11 +380,11 @@ class UI():
         processed_image, check = self.process_image(cv_image)
         if check:
             labels = [
-                self.byhanworkHandle.lbl_inf_1,
-                self.byhanworkHandle.lbl_inf_2,
-                self.byhanworkHandle.lbl_inf_3,
-                self.byhanworkHandle.lbl_inf_4,
-                self.byhanworkHandle.lbl_inf_5
+                self.autoworkHandle.lbl_inf_1,
+                self.autoworkHandle.lbl_inf_2,
+                self.autoworkHandle.lbl_inf_3,
+                self.autoworkHandle.lbl_inf_4,
+                self.autoworkHandle.lbl_inf_5
             ]
             
             for index, key in enumerate(self.data.keys()):
@@ -472,6 +488,34 @@ class UI():
             #     my_db.insert_data("products",qr_code_data)
         else:
             print("Không tìm thấy mã QR code hoặc không thể đọc mã.")
+    
+    def dic_left(self):
+        pub = rospy.Publisher("left_topic",String, queue_size=10)
+        pub.publish("left")
+    
+    def dic_right(self):
+        pub = rospy.Publisher("right_topic",String, queue_size=10)
+        pub.publish("right")
+    
+    def dic_up(self):
+        pub = rospy.Publisher("up_topic",String, queue_size=10)
+        pub.publish("up")
+    def dic_down(self):
+        pub = rospy.Publisher("right_topic",String, queue_size=10)
+        pub.publish("down")
+    
+    def imuCallback(self, imu_msg, choice):
+        ax = imu_msg.linear_acceleration.x
+        ay = imu_msg.linear_acceleration.y
+        az = imu_msg.linear_acceleration.z
+        
+        angle = math.atan2(math.sqrt(ax**2+ay**2),az)*180.0/math.pi
+        angle = "{:.2f}".format(angle)
+        if choice == 1:
+            self.autoworkHandle.lbl_axis.setText(angle)
+        elif choice == 2:
+            self.byhanworkHandle.lbl_axis.setText(angle)
+        
     
 if __name__ == "__main__":
     app = QApplication([])

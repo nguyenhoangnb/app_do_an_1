@@ -70,7 +70,6 @@ class MY_DB():
         columns_list = [column[1] for column in columns]
 
         return columns_list
-<<<<<<< HEAD
     def check_value_exist(self, table_name, column_name, value):
         cursor = self.conn.cursor()
         query = f"SELECT COUNT(*) FROM {table_name} WHERE {column_name} = ?"
@@ -80,8 +79,6 @@ class MY_DB():
             return True
         else:
             return False
-=======
->>>>>>> 2542a42e6b3bdd52084d22447e81cea35590f49f
 #### code sử dụng classs MY_DB()
 #Create table
 # database_properties = {
