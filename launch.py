@@ -19,18 +19,18 @@ from sensor_msgs.msg import Image
 from std_msgs.msg import Int16, String
 
 speed_dc = {
-    "Động cơ 1":0,
-    "Động cơ 2":0,
-    "Động cơ 3":0,
-    "Động cơ 4":0,
-    "Động cơ 5":0,
-    "Động cơ 6":0,
-    "Động cơ 7":0,
-    "Động cơ 8":0,
-    "Động cơ 9":0,
-    "Động cơ 10":0,
-    "Động cơ 11":0,
-    "Động cơ 12":0,
+    "Motor 1":0,
+    "Motor 2":0,
+    "Motor 3":0,
+    "Motor 4":0,
+    "Motor 5":0,
+    "Motor 6":0,
+    "Motor 7":0,
+    "Motor 8":0,
+    "Motor 9":0,
+    "Motor 10":0,
+    "Motor 11":0,
+    "Motor 12":0,
     
 }
 
@@ -110,7 +110,7 @@ class UI():
         self.pub_speed_motor = rospy.Publisher(
             self.topic_speed_by_motor,
             String,
-            queue_size=10
+            queue_size=20
         )
         self.pub_speed_module = rospy.Publisher(
             self.topic_speed_by_module,
@@ -276,41 +276,38 @@ class UI():
         self.byhanworkHandle.btn_byh_continue.hide()
 
         if self.idx == 0:
-            json_data = json.dumps(self.speed_module)
+            json_data = json.dumps(self.speed_module, ensure_ascii=False)
             self.pub_speed_module.publish(json_data)
         elif self.idx == 1:
-            json_data = json.dumps(self.speed_dc)
+            json_data = json.dumps(self.speed_dc, ensure_ascii=False)
             self.pub_speed_motor.publish(json_data)
-            
+
     def stop_byhand(self):
         self.byhanworkHandle.btn_byh_stop.hide()
         self.byhanworkHandle.btn_byh_continue.show()
 
         if self.idx == 0:
             self.speed_module_pred = self.speed_module
-            for x in self.speed_module:
-                self.speed_module[x] = 0
-            json_data = json.dumps(self.speed_module)
+            self.speed_module = {key: 0 for key in self.speed_module}  
+            json_data = json.dumps(self.speed_module, ensure_ascii=False)
             self.pub_speed_module.publish(json_data)
         elif self.idx == 1:
             self.speed_dc_pred = self.speed_dc
-            for x in self.speed_dc:
-                self.speed_dc[x] = 0
-            json_data = json.dumps(self.speed_dc)
+            self.speed_dc = {key: 0 for key in self.speed_dc}  
+            json_data = json.dumps(self.speed_dc, ensure_ascii=False)
             self.pub_speed_motor.publish(json_data)
-            
-    
+
     def continue_byhand(self):
         self.byhanworkHandle.btn_byh_stop.show()
         self.byhanworkHandle.btn_byh_continue.hide()
 
         if self.idx == 0:
             self.speed_module = self.speed_module_pred
-            json_data = json.dumps(self.speed_module)
+            json_data = json.dumps(self.speed_module, ensure_ascii=False)
             self.pub_speed_module.publish(json_data)
         elif self.idx == 1:
             self.speed_dc = self.speed_dc_pred
-            json_data = json.dumps(self.speed_dc)
+            json_data = json.dumps(self.speed_dc, ensure_ascii=False)
             self.pub_speed_motor.publish(json_data)
     
     #insert table
