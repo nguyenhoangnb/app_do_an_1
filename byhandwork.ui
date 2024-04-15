@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>701</height>
+    <width>1211</width>
+    <height>778</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,13 +34,13 @@
     <string notr="true">background-color:#fff;</string>
    </property>
    <property name="text">
-    <string>Tốc độ động cơ</string>
+    <string>Chỉnh tốc độ</string>
    </property>
   </widget>
   <widget class="QPushButton" name="btn_byh_set">
    <property name="geometry">
     <rect>
-     <x>480</x>
+     <x>640</x>
      <y>70</y>
      <width>81</width>
      <height>41</height>
@@ -58,12 +58,12 @@
     <string>Đặt</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox">
+  <widget class="QComboBox" name="cb_motor">
    <property name="geometry">
     <rect>
-     <x>180</x>
+     <x>380</x>
      <y>70</y>
-     <width>161</width>
+     <width>121</width>
      <height>41</height>
     </rect>
    </property>
@@ -77,60 +77,60 @@
    </property>
    <item>
     <property name="text">
-     <string>Động cơ 1</string>
+     <string>Motor 1</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Động cơ 2</string>
+     <string>Motor 2</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Động cơ 3</string>
+     <string>Motor 3</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Động cơ 4</string>
+     <string>Motor 4</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Động cơ 5</string>
+     <string>Motor 5</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Động cơ 6</string>
+     <string>Motor 6</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Động cơ 7</string>
+     <string>Motor 7</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Động cơ 8</string>
+     <string>Motor 8</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Động cơ 9</string>
+     <string>Motor 9</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Động cơ 10</string>
+     <string>Motor 10</string>
     </property>
    </item>
   </widget>
   <widget class="QPushButton" name="btn_byh_up">
    <property name="geometry">
     <rect>
-     <x>620</x>
-     <y>180</y>
+     <x>470</x>
+     <y>230</y>
      <width>81</width>
      <height>41</height>
     </rect>
@@ -150,8 +150,8 @@
   <widget class="QPushButton" name="btn_byh_left">
    <property name="geometry">
     <rect>
-     <x>530</x>
-     <y>220</y>
+     <x>390</x>
+     <y>270</y>
      <width>81</width>
      <height>41</height>
     </rect>
@@ -171,8 +171,8 @@
   <widget class="QPushButton" name="btn_byh_down">
    <property name="geometry">
     <rect>
-     <x>620</x>
-     <y>260</y>
+     <x>470</x>
+     <y>310</y>
      <width>81</width>
      <height>41</height>
     </rect>
@@ -192,8 +192,8 @@
   <widget class="QPushButton" name="btn_byh_right">
    <property name="geometry">
     <rect>
-     <x>700</x>
-     <y>220</y>
+     <x>550</x>
+     <y>270</y>
      <width>81</width>
      <height>41</height>
     </rect>
@@ -213,8 +213,8 @@
   <widget class="QLabel" name="lbl_byh_05">
    <property name="geometry">
     <rect>
-     <x>540</x>
-     <y>130</y>
+     <x>380</x>
+     <y>180</y>
      <width>131</width>
      <height>41</height>
     </rect>
@@ -235,7 +235,7 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>140</y>
+     <y>180</y>
      <width>81</width>
      <height>41</height>
     </rect>
@@ -252,30 +252,11 @@
     <string>Loại hàng</string>
    </property>
   </widget>
-  <widget class="QFrame" name="frame">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>140</y>
-     <width>361</width>
-     <height>221</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Raised</enum>
-   </property>
-  </widget>
   <widget class="QLabel" name="lbl_byh_04">
    <property name="geometry">
     <rect>
-     <x>70</x>
-     <y>400</y>
+     <x>40</x>
+     <y>490</y>
      <width>81</width>
      <height>41</height>
     </rect>
@@ -295,7 +276,7 @@
   <widget class="QLabel" name="lbl_byh_01">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>10</x>
      <y>10</y>
      <width>141</width>
      <height>51</height>
@@ -316,9 +297,9 @@
   <widget class="QPushButton" name="btn_byh_back">
    <property name="geometry">
     <rect>
-     <x>670</x>
+     <x>1030</x>
      <y>20</y>
-     <width>111</width>
+     <width>141</width>
      <height>41</height>
     </rect>
    </property>
@@ -331,13 +312,13 @@
     <string notr="true">background-color:rgb(85, 255, 127)</string>
    </property>
    <property name="text">
-    <string>Quay lại</string>
+    <string>Chuyển chế độ</string>
    </property>
   </widget>
-  <widget class="QPlainTextEdit" name="plainTextEdit">
+  <widget class="QPlainTextEdit" name="plt_speed">
    <property name="geometry">
     <rect>
-     <x>360</x>
+     <x>520</x>
      <y>70</y>
      <width>101</width>
      <height>41</height>
@@ -358,8 +339,8 @@
   <widget class="QTableWidget" name="tbl_quantity">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>400</y>
+     <x>150</x>
+     <y>490</y>
      <width>421</width>
      <height>271</height>
     </rect>
@@ -382,6 +363,368 @@
    <column/>
    <column/>
    <column/>
+  </widget>
+  <widget class="QLabel" name="lbl_byh_6">
+   <property name="geometry">
+    <rect>
+     <x>720</x>
+     <y>640</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string>Thông tin hàng</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_byh_4">
+   <property name="geometry">
+    <rect>
+     <x>720</x>
+     <y>430</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string>Thông tin hàng</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_byh_2">
+   <property name="geometry">
+    <rect>
+     <x>720</x>
+     <y>210</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string>Thông tin hàng</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_byh_3">
+   <property name="geometry">
+    <rect>
+     <x>720</x>
+     <y>320</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string>Thông tin hàng</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_byh_5">
+   <property name="geometry">
+    <rect>
+     <x>720</x>
+     <y>530</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string>Thông tin hàng</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_img">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>230</y>
+     <width>320</width>
+     <height>240</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="cbox_fun">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>70</y>
+     <width>191</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>Theo module</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Theo từng động cơ</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="cb_box_module">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>70</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>Module 1</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Module 2</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Module 3</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Module 4</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QPushButton" name="btn_byh_start">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>120</y>
+     <width>171</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(223, 201, 104);</string>
+   </property>
+   <property name="text">
+    <string>Bắt đầu</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_byh_stop">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>120</y>
+     <width>171</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(223, 201, 104);</string>
+   </property>
+   <property name="text">
+    <string>Tạm dừng</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_byh_continue">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>120</y>
+     <width>171</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(223, 201, 104);</string>
+   </property>
+   <property name="text">
+    <string>Tiếp tục</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_inf_1">
+   <property name="geometry">
+    <rect>
+     <x>880</x>
+     <y>210</y>
+     <width>240</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_inf_2">
+   <property name="geometry">
+    <rect>
+     <x>880</x>
+     <y>320</y>
+     <width>240</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_inf_3">
+   <property name="geometry">
+    <rect>
+     <x>880</x>
+     <y>430</y>
+     <width>240</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_inf_4">
+   <property name="geometry">
+    <rect>
+     <x>880</x>
+     <y>530</y>
+     <width>240</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_inf_5">
+   <property name="geometry">
+    <rect>
+     <x>880</x>
+     <y>640</y>
+     <width>240</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_acc">
+   <property name="geometry">
+    <rect>
+     <x>790</x>
+     <y>70</y>
+     <width>91</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(216, 231, 33);</string>
+   </property>
+   <property name="text">
+    <string>Góc nghiêng</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_axis">
+   <property name="geometry">
+    <rect>
+     <x>920</x>
+     <y>70</y>
+     <width>221</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fff;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
   </widget>
  </widget>
  <resources/>
