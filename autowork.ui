@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1127</width>
-    <height>699</height>
+    <width>1166</width>
+    <height>783</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
   <widget class="QLabel" name="lbl_auw_02">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>60</y>
+     <x>290</x>
+     <y>40</y>
      <width>81</width>
      <height>41</height>
     </rect>
@@ -31,17 +31,21 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
+    <string notr="true">background-color:rgb(200, 239, 196);
+border-radius:12px;</string>
    </property>
    <property name="text">
-    <string>Loại hàng</string>
+    <string>Webcam</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="lbl_auw_03">
+  <widget class="QPushButton" name="btn_auw_stop">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>60</y>
+     <x>60</x>
+     <y>100</y>
      <width>171</width>
      <height>41</height>
     </rect>
@@ -52,39 +56,19 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
+    <string notr="true">background-color:rgb(255, 255, 127);
+border-radius:12px;</string>
    </property>
    <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btn_auw_stop">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>90</y>
-     <width>111</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color:rgb(255, 255, 127);</string>
-   </property>
-   <property name="text">
-    <string>Tạm dừng</string>
+    <string>Stop</string>
    </property>
   </widget>
   <widget class="QPushButton" name="btn_auw_back">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>190</y>
-     <width>111</width>
+     <x>60</x>
+     <y>150</y>
+     <width>171</width>
      <height>41</height>
     </rect>
    </property>
@@ -94,18 +78,19 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:rgb(255, 255, 127);</string>
+    <string notr="true">background-color:rgb(255, 255, 127);
+border-radius:12px;</string>
    </property>
    <property name="text">
-    <string>Quay lại</string>
+    <string>Back</string>
    </property>
   </widget>
   <widget class="QPushButton" name="btn_auw_change">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>140</y>
-     <width>111</width>
+     <x>60</x>
+     <y>210</y>
+     <width>181</width>
      <height>41</height>
     </rect>
    </property>
@@ -114,17 +99,21 @@
      <pointsize>12</pointsize>
     </font>
    </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
    <property name="styleSheet">
-    <string notr="true">background-color:rgb(255, 255, 127);</string>
+    <string notr="true">background-color:rgb(255, 255, 127);
+border-radius:12px;</string>
    </property>
    <property name="text">
-    <string>Chuyển chế độ</string>
+    <string>Setup Systerm Funtion</string>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_auw3">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>90</x>
      <y>370</y>
      <width>81</width>
      <height>41</height>
@@ -136,18 +125,19 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
+    <string notr="true">background-color:rgb(232, 131, 131);
+border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Số lượng</string>
+    <string>Goods</string>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_auw_01">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>60</x>
      <y>20</y>
-     <width>121</width>
+     <width>171</width>
      <height>61</height>
     </rect>
    </property>
@@ -157,18 +147,23 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:rgb(200, 255, 176);</string>
+    <string notr="true">background-color:rgb(200, 255, 176);
+border-radius:20px;
+</string>
    </property>
    <property name="text">
-    <string>Tự động</string>
+    <string>Automation</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
   <widget class="QPushButton" name="btn_auw_continue">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>90</y>
-     <width>111</width>
+     <x>60</x>
+     <y>100</y>
+     <width>171</width>
      <height>41</height>
     </rect>
    </property>
@@ -178,16 +173,17 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:rgb(255, 255, 127);</string>
+    <string notr="true">background-color:rgb(255, 255, 127);
+border-radius:12px;</string>
    </property>
    <property name="text">
-    <string>Tiếp tục</string>
+    <string>Continue</string>
    </property>
   </widget>
-  <widget class="QTableWidget" name="tbl_quantity">
+  <widget class="QTableWidget" name="tbl_auto_quantity">
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>230</x>
      <y>370</y>
      <width>421</width>
      <height>281</height>
@@ -215,8 +211,8 @@
   <widget class="QLabel" name="lbl_img">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>120</y>
+     <x>300</x>
+     <y>100</y>
      <width>320</width>
      <height>240</height>
     </rect>
@@ -231,8 +227,8 @@
   <widget class="QLabel" name="lbl_auw_3">
    <property name="geometry">
     <rect>
-     <x>680</x>
-     <y>120</y>
+     <x>690</x>
+     <y>250</y>
      <width>121</width>
      <height>41</height>
     </rect>
@@ -243,17 +239,21 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
+    <string notr="true">background-color:rgb(228, 191, 191);
+border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Thông tin hàng</string>
+    <string>Information of goods</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_auw_4">
    <property name="geometry">
     <rect>
-     <x>680</x>
-     <y>230</y>
+     <x>690</x>
+     <y>360</y>
      <width>121</width>
      <height>41</height>
     </rect>
@@ -264,17 +264,21 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
+    <string notr="true">background-color:rgb(228, 191, 191);
+border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Thông tin hàng</string>
+    <string>Information of goods</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_auw_5">
    <property name="geometry">
     <rect>
-     <x>680</x>
-     <y>340</y>
+     <x>690</x>
+     <y>470</y>
      <width>121</width>
      <height>41</height>
     </rect>
@@ -285,17 +289,21 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
+    <string notr="true">background-color:rgb(228, 191, 191);
+border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Thông tin hàng</string>
+    <string>Information of goods</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_auw_6">
    <property name="geometry">
     <rect>
-     <x>680</x>
-     <y>440</y>
+     <x>690</x>
+     <y>570</y>
      <width>121</width>
      <height>41</height>
     </rect>
@@ -306,17 +314,21 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
+    <string notr="true">background-color:rgb(228, 191, 191);
+border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Thông tin hàng</string>
+    <string>Information of goods</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_auw_7">
    <property name="geometry">
     <rect>
-     <x>680</x>
-     <y>540</y>
+     <x>690</x>
+     <y>670</y>
      <width>121</width>
      <height>41</height>
     </rect>
@@ -327,23 +339,28 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
+    <string notr="true">background-color:rgb(228, 191, 191);
+border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Thông tin hàng</string>
+    <string>Information of goods</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_inf_4">
    <property name="geometry">
     <rect>
-     <x>830</x>
-     <y>440</y>
+     <x>840</x>
+     <y>570</y>
      <width>240</width>
      <height>80</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
+    <string notr="true">background-color:rgb(188, 221, 244);
+border-radius:10px;</string>
    </property>
    <property name="text">
     <string/>
@@ -352,14 +369,15 @@
   <widget class="QLabel" name="lbl_inf_1">
    <property name="geometry">
     <rect>
-     <x>830</x>
-     <y>120</y>
+     <x>840</x>
+     <y>250</y>
      <width>240</width>
-     <height>80</height>
+     <height>81</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
+    <string notr="true">background-color:rgb(188, 221, 244);
+border-radius:10px;</string>
    </property>
    <property name="text">
     <string/>
@@ -368,14 +386,15 @@
   <widget class="QLabel" name="lbl_inf_5">
    <property name="geometry">
     <rect>
-     <x>830</x>
-     <y>540</y>
+     <x>840</x>
+     <y>670</y>
      <width>240</width>
      <height>80</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
+    <string notr="true">background-color:rgb(188, 221, 244);
+border-radius:10px;</string>
    </property>
    <property name="text">
     <string/>
@@ -384,14 +403,15 @@
   <widget class="QLabel" name="lbl_inf_3">
    <property name="geometry">
     <rect>
-     <x>830</x>
-     <y>340</y>
+     <x>840</x>
+     <y>470</y>
      <width>240</width>
      <height>80</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
+    <string notr="true">background-color:rgb(188, 221, 244);
+border-radius:10px;</string>
    </property>
    <property name="text">
     <string/>
@@ -400,14 +420,15 @@
   <widget class="QLabel" name="lbl_inf_2">
    <property name="geometry">
     <rect>
-     <x>830</x>
-     <y>230</y>
+     <x>840</x>
+     <y>360</y>
      <width>240</width>
      <height>80</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
+    <string notr="true">background-color:rgb(188, 221, 244);
+border-radius:10px;</string>
    </property>
    <property name="text">
     <string/>
@@ -416,14 +437,15 @@
   <widget class="QLabel" name="lbl_axis">
    <property name="geometry">
     <rect>
-     <x>830</x>
-     <y>30</y>
+     <x>840</x>
+     <y>100</y>
      <width>221</width>
      <height>41</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
+    <string notr="true">background-color:#fff;
+border-radius:10px;</string>
    </property>
    <property name="text">
     <string/>
@@ -432,17 +454,95 @@
   <widget class="QLabel" name="label_acc">
    <property name="geometry">
     <rect>
-     <x>680</x>
-     <y>30</y>
+     <x>700</x>
+     <y>100</y>
      <width>91</width>
      <height>41</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:rgb(216, 231, 33);</string>
+    <string notr="true">background-color:rgb(216, 231, 33);
+border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Góc nghiêng</string>
+    <string>Angle</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_auw_X_value">
+   <property name="geometry">
+    <rect>
+     <x>800</x>
+     <y>160</y>
+     <width>81</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(188, 231, 228);
+border-radius:10px;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_auw_X">
+   <property name="geometry">
+    <rect>
+     <x>700</x>
+     <y>160</y>
+     <width>71</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(191, 180, 180);
+border-radius:10px;</string>
+   </property>
+   <property name="text">
+    <string>X</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_auw_Y_value">
+   <property name="geometry">
+    <rect>
+     <x>1010</x>
+     <y>160</y>
+     <width>81</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(188, 231, 228);
+border-radius:10px;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_auw_Y">
+   <property name="geometry">
+    <rect>
+     <x>910</x>
+     <y>160</y>
+     <width>71</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(191, 180, 180);
+border-radius:10px;</string>
+   </property>
+   <property name="text">
+    <string>Y</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>

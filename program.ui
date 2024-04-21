@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>645</width>
-    <height>520</height>
+    <width>930</width>
+    <height>559</height>
    </rect>
   </property>
   <property name="font">
@@ -37,11 +37,11 @@
    <bool>true</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="btn_pr_byhand">
+   <widget class="QPushButton" name="btn_pro_manual">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>150</y>
+      <x>530</x>
+      <y>270</y>
       <width>181</width>
       <height>141</height>
      </rect>
@@ -52,17 +52,19 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:rgb(255, 170, 0)</string>
+     <string notr="true">background-color:rgb(255, 170, 0);
+border:1px solid #333;
+border-radius:30px;</string>
     </property>
     <property name="text">
-     <string>Điều khiển thủ công</string>
+     <string>Manual</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_pro_auto">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>150</y>
+      <x>220</x>
+      <y>270</y>
       <width>191</width>
       <height>141</height>
      </rect>
@@ -73,18 +75,20 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:rgb(255, 170, 0)</string>
+     <string notr="true">background-color:rgb(255, 170, 0);
+border:1px solid #333;
+border-radius:30px;</string>
     </property>
     <property name="text">
-     <string>Điều khiển tự động</string>
+     <string>Automation</string>
     </property>
    </widget>
    <widget class="QLabel" name="lbl_pro_01">
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>90</x>
       <y>40</y>
-      <width>321</width>
+      <width>761</width>
       <height>61</height>
      </rect>
     </property>
@@ -94,10 +98,57 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(170, 255, 127)</string>
+     <string notr="true">background-color: rgb(170, 255, 127);
+border: 1px solid #333; 
+border-radius: 10px;</string>
     </property>
     <property name="text">
-     <string>Chức năng</string>
+     <string>Classification and sorting system for goods using omni wheels</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_imple">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>110</y>
+      <width>381</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(238, 232, 159);
+border: 1px solid;
+border-radius:10px;</string>
+    </property>
+    <property name="text">
+     <string>Implemented by Dr. Le Xuan Luc and the students of K66Robot</string>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lb_function">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>180</y>
+      <width>211</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(238, 146, 117);
+font: 22pt &quot;Ubuntu&quot;;
+border-radius: 10px;</string>
+    </property>
+    <property name="text">
+     <string>Function</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -109,7 +160,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>645</width>
+     <width>930</width>
      <height>22</height>
     </rect>
    </property>

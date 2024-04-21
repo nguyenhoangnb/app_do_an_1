@@ -1,7 +1,7 @@
 from handle import autoHandle
 from handle import programHandle
 from handle import autoworkHandle
-from handle import byhandworkHandle
+from handle import manualHandle
 from pysql import *
 import re
 import json
@@ -44,19 +44,19 @@ speed_module = {
 
 
 pre_data = {
-    "key1":"asdsa",
-    "key2":"asdsa",
-    "key3":"asdsa",
-    "key4":"asdsa",
-    "key5":"asdssa"
+    "id":1,
+    "color":"redd",
+    "address":"a",
+    "type":"a",
+    "price":0.1
 }
 
 data = {
-    "key1":"asdsa",
-    "key2":"asdsa",
-    "key3":"asdsa",
-    "key4":"asdsa",
-    "key5":"asdsa"
+    "id":0,
+    "color":"red",
+    "address":"",
+    "type":"",
+    "price":0.0
 }
 
 def detect_shape(contour):
@@ -91,7 +91,7 @@ class UI():
         self.programUi = QMainWindow()
         self.programHandle = programHandle(self.programUi)
         self.programHandle.btn_pro_auto.clicked.connect(lambda:self.automation())
-        self.programHandle.btn_pr_byhand.clicked.connect(lambda:self.byhand())
+        self.programHandle.btn_pro_manual.clicked.connect(lambda:self.manual())
         # Auto Ui
         self.autoUI = QMainWindow()
         self.autoHandle = autoHandle(self.autoUI)
@@ -106,18 +106,17 @@ class UI():
         self.autoworkHandle.btn_auw_change.clicked.connect(lambda: self.back_to_main())
         self.autoworkHandle.btn_auw_continue.hide()
         self.autoworkHandle.btn_auw_continue.clicked.connect(lambda: self.continue_auto())
-        #ByhandWork UI
-        self.byhandworkUI = QMainWindow()
-        self.byhanworkHandle = byhandworkHandle(self.byhandworkUI)
-        self.byhanworkHandle.btn_byh_back.clicked.connect(lambda:self.back_to_main())
-        self.byhanworkHandle.btn_byh_set.clicked.connect(lambda: self.set_speed_byh(self.idx))
-        self.byhanworkHandle.btn_byh_start.clicked.connect(lambda: self.start_byhand())
-        self.byhanworkHandle.btn_byh_stop.clicked.connect(lambda: self.stop_byhand())
-        self.byhanworkHandle.btn_byh_continue.clicked.connect(lambda: self.continue_byhand())
-        self.byhanworkHandle.btn_byh_left.clicked.connect(lambda: self.dic_left())
-        self.byhanworkHandle.btn_byh_right.clicked.connect(lambda: self.dic_right())
-        self.byhanworkHandle.btn_byh_up.clicked.connect(lambda: self.dic_up())
-        self.byhanworkHandle.btn_byh_down.clicked.connect(lambda: self.dic_dobtn_byh_down())
+        #manual UI
+        self.manualUI = QMainWindow()
+        self.manualHandle = manualHandle(self.manualUI)
+        self.manualHandle.btn_manual_back.clicked.connect(lambda:self.back_to_main())
+        self.manualHandle.btn_manual_set.clicked.connect(lambda: self.set_speed_manual(self.idx))
+        self.manualHandle.btn_manual_start.clicked.connect(lambda: self.start_manual())
+        self.manualHandle.btn_manual_stop.clicked.connect(lambda: self.stop_manual())
+        self.manualHandle.btn_manual_continue.clicked.connect(lambda: self.continue_manual())
+        self.manualHandle.btn_manual_module_1.clicked.connect(lambda: self.dic_module_1())
+        self.manualHandle.btn_manual_module_2.clicked.connect(lambda: self.dic_module_2())
+        self.manualHandle.btn_manual_module_3.clicked.connect(lambda: self.dic_module_3())
         
         #Topic name
         self.topic_img = "image_raw"
@@ -131,8 +130,10 @@ class UI():
         self.programUi.show()
         self.timer = QTimer()
         # self.timer.timeout.connect(lambda:self.insert_table_auto())
-        # self.timer.timeout.connect(lambda:self.insert_table_byhand())
+        # self.timer.timeout.connect(lambda:self.insert_table_manual())
         # self.timer.start(10)
+        self.check = False
+        rospy.init_node("img_node", anonymous=True)
         self.pub_speed_motor = rospy.Publisher(
             self.topic_speed_by_motor,
             String,
@@ -143,42 +144,19 @@ class UI():
             String,
             queue_size=10
         )
-        self.pub_direction = rospy.Publisher(
-            self.topic_direction,
-            String,
-            queue_size=10
-        )
-        rospy.init_node("img_node", anonymous=True)
+        
 
-    # Enable UI
-    # def enable(self, state):
-    #     if state == 1:
-    #         self.autoUI.setEnabled(True)
-    #         self.autoworkUI.setEnabled(False)
-    #         self.programUi.setEnabled(False)
-    #         self.byhandworkUI.setEnabled(False)
-    #     if state == 2:
-    #         self.autoUI.setEnabled(False)
-    #         self.autoworkUI.setEnabled(True)
-    #         self.programUi.setEnabled(False)
-    #         self.byhandworkUI.setEnabled(False)
-    #     if state == 3:
-    #         self.autoUI.setEnabled(False)
-    #         self.autoworkUI.setEnabled(False)
-    #         self.programUi.setEnabled(True)
-    #         self.byhandworkUI.setEnabled(False)
-    #     if state == 4:
-    #         self.autoUI.setEnabled(False)
-    #         self.autoworkUI.setEnabled(False)
-    #         self.programUi.setEnabled(False)
-    #         self.byhandworkUI.setEnabled(True)
-    # Change between modes
+    
     def automation(self):
         self.programUi.hide()
         self.autoUI.show()
+        self.programUi.close()
+        if self.check:
+            self.classify_product(self.data)
         
     def startauto(self):
         self.autoUI.hide()
+        self.autoUI.close()
         self.autoworkUI.show()
         self.timer = QTimer()
         self.timer.timeout.connect(lambda:self.insert_table_auto())
@@ -194,24 +172,22 @@ class UI():
             Imu,
             lambda msg: self.imuCallback(msg,1)
         )
-        
         self.timer.timeout.connect(self.update_image)
-        self.timer.start(1000)  
+        self.timer.start(10)  
         
         
     
     def back_to_main(self):
         self.autoUI.hide()
         self.autoworkUI.hide()
-        self.byhandworkUI.hide()
+        self.manualUI.hide()
         self.programUi.show()
-    
-   
-    
+        self.autoUI.close()
+        self.autoworkUI.close()
+        self.manualUI.close()    
     #set speed auto
     def set_speed_auto(self):
         text = self.autoHandle.cb_auto_speed.currentText()
-        # rospy.init_node("speed_auto", anonymous=True)
         self.pub_speed_auto = rospy.Publisher(
             self.topic_speed_auto,
             Int16,
@@ -219,11 +195,11 @@ class UI():
         )
         rate = rospy.Rate(1)
         mode = 0
-        if text == "Nhanh":
+        if text == "High speed":
             mode = 1
-        if text == "Thường":
+        if text == "Normal speed":
             mode = 2
-        if text == "Chậm":
+        if text == "Slow speed":
             mode = 3
         self.pub_speed_auto.publish(mode)
         
@@ -243,19 +219,21 @@ class UI():
     def back_auto_work(self):
         self.autoworkUI.hide()
         self.autoUI.show()
+        self.autoworkUI.close()
         
         
-    def byhand(self):
+    def manual(self):
         self.programUi.hide()
-        self.byhandworkUI.show()
+        self.manualUI.show()
+        self.programUi.close()
         self.timer = QTimer()
-        self.timer.timeout.connect(lambda:self.insert_table_byhand())
-        self.byhanworkHandle.btn_byh_continue.hide()
+        self.timer.timeout.connect(lambda:self.insert_table_manual())
+        self.manualHandle.btn_manual_continue.hide()
         
         self.sub = rospy.Subscriber(
             self.topic_img,
             Image,
-            self.sub_callback_byh
+            self.sub_callback_manual
         )
         self.sub_imu = rospy.Subscriber(
             self.topic_imu,
@@ -264,48 +242,47 @@ class UI():
         )
         # rospy.Timer(rospy.Duration(1), self.update_image)
         self.timer.timeout.connect(self.update_image)
-        self.timer.start(1000)  
-        self.byhanworkHandle.cbox_fun.currentIndexChanged.connect(self.byhand_change)
-        # self.byhanworkHandle.btn_byh_set.clicked.connect(lambda: self.set_speed_byh(self.idx))
+        self.timer.start(10)  
+        self.manualHandle.cbox_manual_function.currentIndexChanged.connect(self.manual_change)
+        # self.manualHandle.btn_manual_set.clicked.connect(lambda: self.set_speed_manual(self.idx))
         
     
-    def byhand_change(self, idx):
+    def manual_change(self, idx):
         print(idx)
         if idx == 0:
-            self.byhanworkHandle.cb_box_module.show()
-            self.byhanworkHandle.cb_motor.hide()
+            self.manualHandle.cb_manual_module.show()
+            self.manualHandle.cb_manual_motor.hide()
         elif idx == 1:
-            self.byhanworkHandle.cb_box_module.hide()
-            self.byhanworkHandle.cb_motor.show()
+            self.manualHandle.cb_manual_module.hide()
+            self.manualHandle.cb_manual_motor.show()
         self.idx = idx
         
-    def set_speed_byh(self, current_idx):
-        # rospy.init_node("ros_speed", anonymous=True)
+    def set_speed_manual(self, current_idx):
         
         if current_idx == 1:
             
-            dc = self.byhanworkHandle.plt_speed.toPlainText()
-            idx = self.byhanworkHandle.cb_motor.currentText()
+            dc = self.manualHandle.plt_manual_speed.toPlainText()
+            idx = self.manualHandle.cb_manual_motor.currentText()
             if (not self.kiem_tra(dc)):
                 print(dc)
-                self.byhanworkHandle.plt_speed.setPlainText("0")
+                self.manualHandle.plt_manual_speed.setPlainText("0")
             else:
-                self.speed_dc[idx] = int(self.byhanworkHandle.plt_speed.toPlainText())
+                self.speed_dc[idx] = int(self.manualHandle.plt_manual_speed.toPlainText())
                 
             print(self.speed_dc)
         elif current_idx == 0:
-            mod_speed = self.byhanworkHandle.plt_speed.toPlainText()
-            idx_mod = self.byhanworkHandle.cb_box_module.currentText()
+            mod_speed = self.manualHandle.plt_manual_speed.toPlainText()
+            idx_mod = self.manualHandle.cb_manual_module.currentText()
             print(idx_mod)
             if not self.kiem_tra(mod_speed):
-                self.byhanworkHandle.plt_speed.setPlainText("0")
+                self.manualHandle.plt_manual_speed.setPlainText("0")
             else:
-                self.speed_module[idx_mod] = int(self.byhanworkHandle.plt_speed.toPlainText())
+                self.speed_module[idx_mod] = int(self.manualHandle.plt_manual_speed.toPlainText())
             print(mod_speed)
             
-    def start_byhand(self):
-        self.byhanworkHandle.btn_byh_continue.hide()
-        self.byhanworkHandle.btn_byh_stop.show()
+    def start_manual(self):
+        self.manualHandle.btn_manual_continue.hide()
+        self.manualHandle.btn_manual_stop.show()
 
         if self.idx == 0:
             json_data = json.dumps(self.speed_module, ensure_ascii=False)
@@ -314,9 +291,9 @@ class UI():
             json_data = json.dumps(self.speed_dc, ensure_ascii=False)
             self.pub_speed_motor.publish(json_data)
 
-    def stop_byhand(self):
-        self.byhanworkHandle.btn_byh_stop.hide()
-        self.byhanworkHandle.btn_byh_continue.show()
+    def stop_manual(self):
+        self.manualHandle.btn_manual_stop.hide()
+        self.manualHandle.btn_manual_continue.show()
 
         if self.idx == 0:
             self.speed_module_pred = self.speed_module
@@ -329,9 +306,9 @@ class UI():
             json_data = json.dumps(self.speed_dc, ensure_ascii=False)
             self.pub_speed_motor.publish(json_data)
 
-    def continue_byhand(self):
-        self.byhanworkHandle.btn_byh_stop.show()
-        self.byhanworkHandle.btn_byh_continue.hide()
+    def continue_manual(self):
+        self.manualHandle.btn_manual_stop.show()
+        self.manualHandle.btn_manual_continue.hide()
 
         if self.idx == 0:
             self.speed_module = self.speed_module_pred
@@ -346,26 +323,32 @@ class UI():
     def insert_table_auto(self):
         mydb = MY_DB()
         mydb.connect("data.db")
-        self.autoworkHandle.tbl_quantity.setRowCount(0)
-        self.result = mydb.select_all("products")
-        label = mydb.get_table_columns("products") 
-        self.autoworkHandle.tbl_quantity.setHorizontalHeaderLabels(label)
+        self.autoworkHandle.tbl_auto_quantity.setRowCount(0)
+        self.result = mydb.select_all("consumer_goods")
+        label = ["id", "color", "amount"]
+        label1 = mydb.get_table_columns("consumer_goods") 
+        self.autoworkHandle.tbl_auto_quantity.setColumnCount(len(label))
+        self.autoworkHandle.tbl_auto_quantity.setHorizontalHeaderLabels(label)
         for row_num, row_data in enumerate(self.result):
-            self.autoworkHandle.tbl_quantity.insertRow(row_num)
+            self.autoworkHandle.tbl_auto_quantity.insertRow(row_num)
             for col_num, col_data in enumerate(row_data):
-                self.autoworkHandle.tbl_quantity.setItem(row_num, col_num, QTableWidgetItem(str(col_data))) 
+                if label1[col_num] == "color" or label1[col_num] == "id" or label1[col_num] == "amount":
+                    self.autoworkHandle.tbl_auto_quantity.setItem(row_num, col_num, QTableWidgetItem(str(col_data))) 
         mydb.close()
-    def insert_table_byhand(self):
+    def insert_table_manual(self):
         mydb = MY_DB()
         mydb.connect("data.db")
-        self.byhanworkHandle.tbl_quantity.setRowCount(0)
-        self.result = mydb.select_all("products")
-        label = mydb.get_table_columns("products") 
-        self.byhanworkHandle.tbl_quantity.setHorizontalHeaderLabels(label)
+        self.manualHandle.tbl_manual_quantity.setRowCount(0)
+        self.result = mydb.select_all("consumer_goods")
+        label = ["id", "color", "amount"]
+        label1 = mydb.get_table_columns("consumer_goods")  
+        self.manualHandle.tbl_manual_quantity.setColumnCount(len(label))
+        self.manualHandle.tbl_manual_quantity.setHorizontalHeaderLabels(label)
         for row_num, row_data in enumerate(self.result):
-            self.byhanworkHandle.tbl_quantity.insertRow(row_num)
+            self.manualHandle.tbl_manual_quantity.insertRow(row_num)
             for col_num, col_data in enumerate(row_data):
-                self.byhanworkHandle.tbl_quantity.setItem(row_num, col_num, QTableWidgetItem(str(col_data))) 
+                if label1[col_num] == "color" or label1[col_num] == "id" or label1[col_num] == "amount":
+                    self.manualHandle.tbl_manual_quantity.setItem(row_num, col_num, QTableWidgetItem(str(col_data))) 
         mydb.close()
         
     def kiem_tra(self,xau):
@@ -377,9 +360,26 @@ class UI():
         h, w, ch = cv_image.shape
         bytes_per_line = ch * w
         
-        processed_image, check = self.process_image(cv_image)
-        if check:
-            labels = [
+        self.check = self.process_image(cv_image)
+        qt_img = QImage(cv_image.data, w, h, bytes_per_line, QImage.Format_RGB888)
+        pixmap = QPixmap.fromImage(qt_img)
+        self.autoworkHandle.lbl_img.setPixmap(pixmap.scaled(self.autoworkHandle.lbl_img.size(), Qt.KeepAspectRatio))
+        if self.check:
+            mydb = MY_DB()
+            mydb.connect("data.db")
+            if not mydb.check_value_exist("consumer_goods","id",self.data["id"]) and self.data["id"]!=0:
+                mydb.insert_data("consumer_goods",self.data )
+            if mydb.check_value_exist("consumer_goods", "id",self.data["id"]):
+                mydb.update_amount("consumer_goods",self.data)
+            mydb.close()
+            labels_name = [
+                self.autoworkHandle.lbl_auw_3,
+                self.autoworkHandle.lbl_auw_4,
+                self.autoworkHandle.lbl_auw_5,
+                self.autoworkHandle.lbl_auw_6,
+                self.autoworkHandle.lbl_auw_7
+            ]
+            labels_inf = [
                 self.autoworkHandle.lbl_inf_1,
                 self.autoworkHandle.lbl_inf_2,
                 self.autoworkHandle.lbl_inf_3,
@@ -388,53 +388,51 @@ class UI():
             ]
             
             for index, key in enumerate(self.data.keys()):
-                if index < len(labels):
-                    labels[index].setText(self.data[key])
-                    labels[index].setWordWrap(True)
-        # if self.data != self.prev_data:
-        #     self.prev_data = self.data
-        #     print("Day la: ", end="")
-        #     print(self.prev_data)
-        #     self.classify_product(self.data)
-        
-        qt_img = QImage(processed_image.data, w, h, bytes_per_line, QImage.Format_RGB888)
-        pixmap = QPixmap.fromImage(qt_img)
-        self.autoworkHandle.lbl_img.setPixmap(pixmap.scaled(self.autoworkHandle.lbl_img.size(), Qt.KeepAspectRatio))
-
-    def sub_callback_byh(self, image):
+                if index < len(labels_inf):
+                    labels_name[index].setText(key)
+                    labels_inf[index].setText(str(self.data[key]))
+                    labels_inf[index].setWordWrap(True)
+ 
+    def sub_callback_manual(self, image):
         cv_image = self.bridge.imgmsg_to_cv2(image)
         cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
-        
         h, w, ch = cv_image.shape
-        # print(cv_image.shape)
         bytes_per_line = ch * w
         
-        processed_image, check = self.process_image(cv_image)
-        print(check)
-        # if self.data:
-        #     self.prev_data = self.data
-        #     print("Day la: ", end="")
-        #     print(self.data)
-        #     self.classify_product(self.data)
-        if check:
-            labels = [
-                self.byhanworkHandle.lbl_inf_1,
-                self.byhanworkHandle.lbl_inf_2,
-                self.byhanworkHandle.lbl_inf_3,
-                self.byhanworkHandle.lbl_inf_4,
-                self.byhanworkHandle.lbl_inf_5
+        self.check = self.process_image(cv_image)
+        qt_img = QImage(cv_image.data, w, h, bytes_per_line, QImage.Format_RGB888)
+        pixmap = QPixmap.fromImage(qt_img)
+        self.manualHandle.lbl_img.setPixmap(pixmap.scaled(self.manualHandle.lbl_img.size(), Qt.KeepAspectRatio))
+        
+        if self.check:
+            mydb = MY_DB()
+            mydb.connect("data.db")
+            if not mydb.check_value_exist("consumer_goods","id",self.data["id"]) and self.data["id"]!=0:
+                mydb.insert_data("consumer_goods",self.data )
+            if mydb.check_value_exist("consumer_goods", "id",self.data["id"]):
+                mydb.update_amount("consumer_goods",self.data)
+            mydb.close()
+            labels_name = [
+                self.manualHandle.lbl_manual_2,
+                self.manualHandle.lbl_manual_3,
+                self.manualHandle.lbl_manual_4,
+                self.manualHandle.lbl_manual_5,
+                self.manualHandle.lbl_manual_6
+            ]
+            labels_inf = [
+                self.manualHandle.lbl_manual_inf_1,
+                self.manualHandle.lbl_manual_inf_2,
+                self.manualHandle.lbl_manual_inf_3,
+                self.manualHandle.lbl_manual_inf_4,
+                self.manualHandle.lbl_manual_inf_5
             ]
             
             for index, key in enumerate(self.data.keys()):
-                if index < len(labels):
-                    labels[index].setText(self.data[key])
-                    labels[index].setWordWrap(True)
-
+                if index < len(labels_inf):
+                    labels_name[index].setText(key)
+                    labels_inf[index].setText(str(self.data[key]))
+                    labels_inf[index].setWordWrap(True)
         
-        
-        qt_img = QImage(processed_image.data, w, h, bytes_per_line, QImage.Format_RGB888)
-        pixmap = QPixmap.fromImage(qt_img)
-        self.byhanworkHandle.lbl_img.setPixmap(pixmap.scaled(self.byhanworkHandle.lbl_img.size(), Qt.KeepAspectRatio))
 
     def update_image(self):
         # You may add functionality here if needed
@@ -445,21 +443,17 @@ class UI():
         detector = cv2.QRCodeDetector()
         data, bbox, _ = detector.detectAndDecode(frame_flipped)
         check = False
-        
         if data:
-            print(type(data))
             self.data = json.loads(data)
         
         if self.compare_data():
             self.prev_data = self.data
-            self.classify_product(data)
             check = True
 
         if bbox is not None:
             print("Waiting for QR code. Product Information:")
-            print(self.data)
 
-        return frame, check
+        return check
 
     def compare_data(self):
       
@@ -468,41 +462,41 @@ class UI():
                 return True
         return False
 
-    def classify_product(self, qr_code_data ):
-        my_db = MY_DB()
-        my_db.connect("data.db")
-        direction = ""
+    def classify_product(self, qr_code_data :dict):
+        direction = 0
+        pub_direction = rospy.Publisher(
+            self.topic_direction,
+            Int16,
+            queue_size=20
+        )
+        
+        color = qr_code_data.get("color")
         if qr_code_data:
-            print("Phân loại sản phẩm dựa trên thông tin từ mã QR code:", qr_code_data)
-            # if qr_code_data['key'] == "xanh":
-            #     direction = "1"
-            # elif qr_code_data['key'] == "do":
-            #     direction = "2"
-            # elif qr_code_data['key'] == "vang":
-            #     direction = "3"
-            # self.pub_direction(direction)
-            # check_value = my_db.check_value_exist(qr_code_data["key"])
-            # if check_value:
-            #     my_db.update_data("products", {"num": qr_code_data["num"]}, f"id = {qr_code_data['id']}")
-            # else:
-            #     my_db.insert_data("products",qr_code_data)
+            print("Classify product base on qrcode:", qr_code_data)
+            if color == "green":
+                direction = 1
+            elif color == "red":
+                direction = 2
+            elif color == "blue":
+                direction = 3
+            print(direction)    
+            pub_direction(direction)
+
         else:
-            print("Không tìm thấy mã QR code hoặc không thể đọc mã.")
+            print("No Qrcode found or unable to read Qrcode")
     
-    def dic_left(self):
-        pub = rospy.Publisher("left_topic",String, queue_size=10)
-        pub.publish("left")
+    def dic_module_1(self):
+        pub = rospy.Publisher("module_1_topic",String, queue_size=10)
+        pub.publish("module_1")
     
-    def dic_right(self):
-        pub = rospy.Publisher("right_topic",String, queue_size=10)
-        pub.publish("right")
+    def dic_module_2(self):
+        pub = rospy.Publisher("module_2_topic",String, queue_size=10)
+        pub.publish("module_2")
     
-    def dic_up(self):
-        pub = rospy.Publisher("up_topic",String, queue_size=10)
-        pub.publish("up")
-    def dic_down(self):
-        pub = rospy.Publisher("right_topic",String, queue_size=10)
-        pub.publish("down")
+    def dic_module_3(self):
+        pub = rospy.Publisher("module_3_topic",String, queue_size=10)
+        pub.publish("module_3")
+   
     
     def imuCallback(self, imu_msg, choice):
         ax = imu_msg.linear_acceleration.x
@@ -511,10 +505,16 @@ class UI():
         
         angle = math.atan2(math.sqrt(ax**2+ay**2),az)*180.0/math.pi
         angle = "{:.2f}".format(angle)
+        ax = "{:.2f}".format(ax)
+        ay = "{:.2f}".format(ay)
         if choice == 1:
             self.autoworkHandle.lbl_axis.setText(angle)
+            self.autoworkHandle.lbl_auw_X_value.setText(str(ax))
+            self.autoworkHandle.lbl_auw_Y_value.setText(str(ay))
         elif choice == 2:
-            self.byhanworkHandle.lbl_axis.setText(angle)
+            self.manualHandle.lbl_axis.setText(angle)
+            self.manualHandle.lbl_manual_x_value.setText(str(ax))
+            self.manualHandle.lbl_manual_y_value.setText(str(ay))
         
     
 if __name__ == "__main__":

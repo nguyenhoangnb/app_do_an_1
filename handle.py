@@ -1,7 +1,7 @@
 import auto
 import program
 import autowork
-import byhandwork
+import manual
 
 #Program
 
@@ -10,7 +10,7 @@ class programHandle(program.Ui_MainWindow):
         super().__init__()
         self.setupUi(main_window)
 #By Hand Work
-class byhandworkHandle(byhandwork.Ui_Form):
+class manualHandle(manual.Ui_Form):
     def __init__(self, main_window):
         super().__init__()
         self.setupUi(main_window)

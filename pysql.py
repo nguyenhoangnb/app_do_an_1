@@ -79,6 +79,17 @@ class MY_DB():
             return True
         else:
             return False
+    def update_amount(self, table_name, data: dict):
+        cursor = self.conn.cursor()
+        query = f"UPDATE {table_name} SET amount = amount + 1 WHERE "
+        conditions = []
+        values = []
+        for key, value in data.items():
+            conditions.append(f"{key} = ?")
+            values.append(value)
+        query += " AND ".join(conditions)
+        cursor.execute(query, values)
+
 #### code sử dụng classs MY_DB()
 #Create table
 # database_properties = {
