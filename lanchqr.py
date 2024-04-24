@@ -145,28 +145,31 @@ class UI():
             queue_size=10
         )
         
-
-    
     def automation(self):
         self.programUi.hide()
         self.autoUI.show()
         self.programUi.close()
-        if self.check:
-            self.classify_product(self.data)
+        self.autoworkUI.close()
+        self.manualUI.close()
+        
         
     def startauto(self):
         self.autoUI.hide()
         self.autoUI.close()
+        self.programUi.close()
+        self.manualUI.close()
         self.autoworkUI.show()
         self.timer = QTimer()
         self.timer.timeout.connect(lambda:self.insert_table_auto())
-        # self.timer.start(10)  
+        # self.timer.start(100)  
         
         self.sub = rospy.Subscriber(
             self.topic_img,
             Image,
             self.sub_callback
         )
+        if self.check:
+            self.classify_product(self.data)
         self.sub_imu = rospy.Subscriber(
             self.topic_imu,
             Imu,
@@ -215,17 +218,17 @@ class UI():
         self.autoworkHandle.btn_auw_stop.show()
         self.autoworkHandle.btn_auw_continue.hide()
         
-            
     def back_auto_work(self):
         self.autoworkUI.hide()
         self.autoUI.show()
         self.autoworkUI.close()
         
-        
     def manual(self):
         self.programUi.hide()
         self.manualUI.show()
         self.programUi.close()
+        self.autoUI.close()
+        self.autoworkUI.close()
         self.timer = QTimer()
         self.timer.timeout.connect(lambda:self.insert_table_manual())
         self.manualHandle.btn_manual_continue.hide()
@@ -235,6 +238,8 @@ class UI():
             Image,
             self.sub_callback_manual
         )
+        if self.check:
+            self.classify_product(self.data)
         self.sub_imu = rospy.Subscriber(
             self.topic_imu,
             Imu,
@@ -245,7 +250,6 @@ class UI():
         self.timer.start(10)  
         self.manualHandle.cbox_manual_function.currentIndexChanged.connect(self.manual_change)
         # self.manualHandle.btn_manual_set.clicked.connect(lambda: self.set_speed_manual(self.idx))
-        
     
     def manual_change(self, idx):
         print(idx)
@@ -258,9 +262,7 @@ class UI():
         self.idx = idx
         
     def set_speed_manual(self, current_idx):
-        
         if current_idx == 1:
-            
             dc = self.manualHandle.plt_manual_speed.toPlainText()
             idx = self.manualHandle.cb_manual_motor.currentText()
             if (not self.kiem_tra(dc)):
@@ -283,18 +285,16 @@ class UI():
     def start_manual(self):
         self.manualHandle.btn_manual_continue.hide()
         self.manualHandle.btn_manual_stop.show()
-
         if self.idx == 0:
             json_data = json.dumps(self.speed_module, ensure_ascii=False)
             self.pub_speed_module.publish(json_data)
         elif self.idx == 1:
             json_data = json.dumps(self.speed_dc, ensure_ascii=False)
             self.pub_speed_motor.publish(json_data)
-
+            
     def stop_manual(self):
         self.manualHandle.btn_manual_stop.hide()
         self.manualHandle.btn_manual_continue.show()
-
         if self.idx == 0:
             self.speed_module_pred = self.speed_module
             self.speed_module = {key: 0 for key in self.speed_module}  
@@ -451,7 +451,8 @@ class UI():
             check = True
 
         if bbox is not None:
-            print("Waiting for QR code. Product Information:")
+            # print("Waiting for QR code. Product Information:")
+            pass
 
         return check
 
@@ -469,6 +470,7 @@ class UI():
             Int16,
             queue_size=20
         )
+        print(direction)    
         
         color = qr_code_data.get("color")
         if qr_code_data:
@@ -515,7 +517,6 @@ class UI():
             self.manualHandle.lbl_axis.setText(angle)
             self.manualHandle.lbl_manual_x_value.setText(str(ax))
             self.manualHandle.lbl_manual_y_value.setText(str(ay))
-        
     
 if __name__ == "__main__":
     app = QApplication([])

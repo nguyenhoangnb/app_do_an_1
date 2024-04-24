@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>AUTO</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color:rgb(242, 252, 251)</string>

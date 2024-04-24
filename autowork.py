@@ -56,6 +56,7 @@ class Ui_Form(object):
         self.lbl_auw3.setFont(font)
         self.lbl_auw3.setStyleSheet("background-color:rgb(232, 131, 131);\n"
 "border-radius:10px;")
+        self.lbl_auw3.setWordWrap(True)
         self.lbl_auw3.setObjectName("lbl_auw3")
         self.lbl_auw_01 = QtWidgets.QLabel(Form)
         self.lbl_auw_01.setGeometry(QtCore.QRect(60, 20, 171, 61))
@@ -203,12 +204,12 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
+        Form.setWindowTitle(_translate("Form", "AUTOMATION"))
         self.lbl_auw_02.setText(_translate("Form", "Webcam"))
         self.btn_auw_stop.setText(_translate("Form", "Stop"))
         self.btn_auw_back.setText(_translate("Form", "Back"))
         self.btn_auw_change.setText(_translate("Form", "Setup Systerm Funtion"))
-        self.lbl_auw3.setText(_translate("Form", "Goods"))
+        self.lbl_auw3.setText(_translate("Form", "Number of goods"))
         self.lbl_auw_01.setText(_translate("Form", "Automation"))
         self.btn_auw_continue.setText(_translate("Form", "Continue"))
         self.lbl_auw_3.setText(_translate("Form", "Information of goods"))

@@ -82,7 +82,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MAIN PROGRAM"))
         self.btn_pro_manual.setText(_translate("MainWindow", "Manual"))
         self.btn_pro_auto.setText(_translate("MainWindow", "Automation"))
         self.lbl_pro_01.setText(_translate("MainWindow", "Classification and sorting system for goods using omni wheels"))

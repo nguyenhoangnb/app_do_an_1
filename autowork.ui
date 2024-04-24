@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>AUTOMATION</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color:rgb(235, 238, 255)</string>
@@ -129,7 +129,10 @@ border-radius:12px;</string>
 border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Goods</string>
+    <string>Number of goods</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_auw_01">

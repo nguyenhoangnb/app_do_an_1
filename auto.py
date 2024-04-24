@@ -74,7 +74,7 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
+        Form.setWindowTitle(_translate("Form", "AUTO"))
         self.btn_auto_set.setText(_translate("Form", "Set"))
         self.lbl_auto_02.setText(_translate("Form", "Speed"))
         self.cb_auto_speed.setItemText(0, _translate("Form", "High speed"))
