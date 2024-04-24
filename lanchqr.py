@@ -123,12 +123,14 @@ class UI():
         self.topic_speed_auto = "speed_auto"
         self.topic_speed_by_module = "speed_module"
         self.topic_speed_by_motor = "speed_motor"
-        self.topic_direction = "direction"
+        self.topic_speed = "control_signal"
         self.topic_imu = "handsfree/imu"
         self.bridge = CvBridge()
-        
         self.programUi.show()
         self.timer = QTimer()
+        
+        self.capture = cv2.VideoCapture(0)
+        # self.start = False
         # self.timer.timeout.connect(lambda:self.insert_table_auto())
         # self.timer.timeout.connect(lambda:self.insert_table_manual())
         # self.timer.start(10)
@@ -145,6 +147,12 @@ class UI():
             queue_size=10
         )
         
+        self.pub_direction = rospy.Publisher(
+            self.topic_speed,
+            String,
+            queue_size=10
+        )
+       
     def automation(self):
         self.programUi.hide()
         self.autoUI.show()
@@ -163,23 +171,22 @@ class UI():
         self.timer.timeout.connect(lambda:self.insert_table_auto())
         # self.timer.start(100)  
         
-        self.sub = rospy.Subscriber(
-            self.topic_img,
-            Image,
-            self.sub_callback
-        )
-        if self.check:
-            self.classify_product(self.data)
+        # self.show_img_automation()
+        
         self.sub_imu = rospy.Subscriber(
             self.topic_imu,
             Imu,
             lambda msg: self.imuCallback(msg,1)
         )
-        self.timer.timeout.connect(self.update_image)
-        self.timer.start(10)  
-        
+        self.pub_out_timer = QTimer()
+        self.pub_ = rospy.Publisher('number',Int16,queue_size=10)
+        # self.pub_out_timer.timeout.connect(self.out)
+        # self.pub_out_timer.start(5000)
+        self.timer.timeout.connect(self.show_img_automation)
+        self.timer.start(1000//30) 
         
     
+       
     def back_to_main(self):
         self.autoUI.hide()
         self.autoworkUI.hide()
@@ -196,15 +203,15 @@ class UI():
             Int16,
             queue_size=10
         )
-        rate = rospy.Rate(1)
-        mode = 0
+        # rate = rospy.Rate(1)
+        self.mode = 0
         if text == "High speed":
-            mode = 1
+            self.mode = 1
         if text == "Normal speed":
-            mode = 2
+            self.mode = 2
         if text == "Slow speed":
-            mode = 3
-        self.pub_speed_auto.publish(mode)
+            self.mode = 3
+        # self.pub_speed_auto.publish(self.mode)
         
  
     def stop_auto(self):
@@ -232,24 +239,17 @@ class UI():
         self.timer = QTimer()
         self.timer.timeout.connect(lambda:self.insert_table_manual())
         self.manualHandle.btn_manual_continue.hide()
-        
-        self.sub = rospy.Subscriber(
-            self.topic_img,
-            Image,
-            self.sub_callback_manual
-        )
-        if self.check:
-            self.classify_product(self.data)
         self.sub_imu = rospy.Subscriber(
             self.topic_imu,
             Imu,
             lambda msg: self.imuCallback(msg,2)
         )
         # rospy.Timer(rospy.Duration(1), self.update_image)
-        self.timer.timeout.connect(self.update_image)
-        self.timer.start(10)  
         self.manualHandle.cbox_manual_function.currentIndexChanged.connect(self.manual_change)
-        # self.manualHandle.btn_manual_set.clicked.connect(lambda: self.set_speed_manual(self.idx))
+        self.timer.timeout.connect(self.sub_callback_manual)
+        self.timer.start(1000//30)  
+       
+        self.manualHandle.btn_manual_set.clicked.connect(lambda: self.set_speed_manual(self.idx))
     
     def manual_change(self, idx):
         print(idx)
@@ -354,90 +354,92 @@ class UI():
     def kiem_tra(self,xau):
         return bool(re.match(r'^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$', xau))
     
-    def sub_callback(self, image):
-        cv_image = self.bridge.imgmsg_to_cv2(image)
-        cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
-        h, w, ch = cv_image.shape
-        bytes_per_line = ch * w
-        
-        self.check = self.process_image(cv_image)
-        qt_img = QImage(cv_image.data, w, h, bytes_per_line, QImage.Format_RGB888)
-        pixmap = QPixmap.fromImage(qt_img)
-        self.autoworkHandle.lbl_img.setPixmap(pixmap.scaled(self.autoworkHandle.lbl_img.size(), Qt.KeepAspectRatio))
-        if self.check:
-            mydb = MY_DB()
-            mydb.connect("data.db")
-            if not mydb.check_value_exist("consumer_goods","id",self.data["id"]) and self.data["id"]!=0:
-                mydb.insert_data("consumer_goods",self.data )
-            if mydb.check_value_exist("consumer_goods", "id",self.data["id"]):
-                mydb.update_amount("consumer_goods",self.data)
-            mydb.close()
-            labels_name = [
-                self.autoworkHandle.lbl_auw_3,
-                self.autoworkHandle.lbl_auw_4,
-                self.autoworkHandle.lbl_auw_5,
-                self.autoworkHandle.lbl_auw_6,
-                self.autoworkHandle.lbl_auw_7
-            ]
-            labels_inf = [
-                self.autoworkHandle.lbl_inf_1,
-                self.autoworkHandle.lbl_inf_2,
-                self.autoworkHandle.lbl_inf_3,
-                self.autoworkHandle.lbl_inf_4,
-                self.autoworkHandle.lbl_inf_5
-            ]
-            
-            for index, key in enumerate(self.data.keys()):
-                if index < len(labels_inf):
-                    labels_name[index].setText(key)
-                    labels_inf[index].setText(str(self.data[key]))
-                    labels_inf[index].setWordWrap(True)
+    def show_img_automation(self):
+        ret, cv_image = self.capture.read()
+        if ret:
+            cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
+            h, w, ch = cv_image.shape
+            bytes_per_line = ch * w
+            self.check = self.processdirection_image(cv_image)
+            qt_img = QImage(cv_image.data, w, h, bytes_per_line, QImage.Format_RGB888)
+            pixmap = QPixmap.fromImage(qt_img)
+            self.autoworkHandle.lbl_img.setPixmap(pixmap.scaled(self.autoworkHandle.lbl_img.size(), Qt.KeepAspectRatio))
+            if self.check:
+                self.classify_product(self.data)
+                mydb = MY_DB()
+                mydb.connect("data.db")
+                if not mydb.check_value_exist("consumer_goods","id",self.data["id"]) and self.data["id"]!=0:
+                    mydb.insert_data("consumer_goods",self.data )
+                if mydb.check_value_exist("consumer_goods", "id",self.data["id"]):
+                    mydb.update_amount("consumer_goods",self.data)
+                mydb.close()
+                labels_name = [
+                    self.autoworkHandle.lbl_auw_3,
+                    self.autoworkHandle.lbl_auw_4,
+                    self.autoworkHandle.lbl_auw_5,
+                    self.autoworkHandle.lbl_auw_6,
+                    self.autoworkHandle.lbl_auw_7
+                ]
+                labels_inf = [
+                    self.autoworkHandle.lbl_inf_1,
+                    self.autoworkHandle.lbl_inf_2,
+                    self.autoworkHandle.lbl_inf_3,
+                    self.autoworkHandle.lbl_inf_4,
+                    self.autoworkHandle.lbl_inf_5
+                ]
+                
+                for index, key in enumerate(self.data.keys()):
+                    if index < len(labels_inf):
+                        labels_name[index].setText(key)
+                        labels_inf[index].setText(str(self.data[key]))
+                        labels_inf[index].setWordWrap(True)
+                self.check = False
  
-    def sub_callback_manual(self, image):
-        cv_image = self.bridge.imgmsg_to_cv2(image)
-        cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
-        h, w, ch = cv_image.shape
-        bytes_per_line = ch * w
-        
-        self.check = self.process_image(cv_image)
-        qt_img = QImage(cv_image.data, w, h, bytes_per_line, QImage.Format_RGB888)
-        pixmap = QPixmap.fromImage(qt_img)
-        self.manualHandle.lbl_img.setPixmap(pixmap.scaled(self.manualHandle.lbl_img.size(), Qt.KeepAspectRatio))
-        
-        if self.check:
-            mydb = MY_DB()
-            mydb.connect("data.db")
-            if not mydb.check_value_exist("consumer_goods","id",self.data["id"]) and self.data["id"]!=0:
-                mydb.insert_data("consumer_goods",self.data )
-            if mydb.check_value_exist("consumer_goods", "id",self.data["id"]):
-                mydb.update_amount("consumer_goods",self.data)
-            mydb.close()
-            labels_name = [
-                self.manualHandle.lbl_manual_2,
-                self.manualHandle.lbl_manual_3,
-                self.manualHandle.lbl_manual_4,
-                self.manualHandle.lbl_manual_5,
-                self.manualHandle.lbl_manual_6
-            ]
-            labels_inf = [
-                self.manualHandle.lbl_manual_inf_1,
-                self.manualHandle.lbl_manual_inf_2,
-                self.manualHandle.lbl_manual_inf_3,
-                self.manualHandle.lbl_manual_inf_4,
-                self.manualHandle.lbl_manual_inf_5
-            ]
+    def sub_callback_manual(self):
+        # cv_image = self.bridge.imgmsg_to_cv2(image)
+        # capture = cv2.VideoCapture("/dev/video0")
+        ret, cv_image = self.capture.read()
+        if ret:
+            cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
+            h, w, ch = cv_image.shape
+            bytes_per_line = ch * w
             
-            for index, key in enumerate(self.data.keys()):
-                if index < len(labels_inf):
-                    labels_name[index].setText(key)
-                    labels_inf[index].setText(str(self.data[key]))
-                    labels_inf[index].setWordWrap(True)
-        
-
-    def update_image(self):
-        # You may add functionality here if needed
-        pass
-
+            self.check = self.process_image(cv_image)
+            qt_img = QImage(cv_image.data, w, h, bytes_per_line, QImage.Format_RGB888)
+            pixmap = QPixmap.fromImage(qt_img)
+            self.manualHandle.lbl_img.setPixmap(pixmap.scaled(self.manualHandle.lbl_img.size(), Qt.KeepAspectRatio))
+            
+            if self.check:
+                self.classify_product(self.data)
+                mydb = MY_DB()
+                mydb.connect("data.db")
+                if not mydb.check_value_exist("consumer_goods","id",self.data["id"]) and self.data["id"]!=0:
+                    mydb.insert_data("consumer_goods",self.data )
+                if mydb.check_value_exist("consumer_goods", "id",self.data["id"]):
+                    mydb.update_amount("consumer_goods",self.data)
+                mydb.close()
+                labels_name = [
+                    self.manualHandle.lbl_manual_2,
+                    self.manualHandle.lbl_manual_3,
+                    self.manualHandle.lbl_manual_4,
+                    self.manualHandle.lbl_manual_5,
+                    self.manualHandle.lbl_manual_6
+                ]
+                labels_inf = [
+                    self.manualHandle.lbl_manual_inf_1,
+                    self.manualHandle.lbl_manual_inf_2,
+                    self.manualHandle.lbl_manual_inf_3,
+                    self.manualHandle.lbl_manual_inf_4,
+                    self.manualHandle.lbl_manual_inf_5
+                ]
+                
+                for index, key in enumerate(self.data.keys()):
+                    if index < len(labels_inf):
+                        labels_name[index].setText(key)
+                        labels_inf[index].setText(str(self.data[key]))
+                        labels_inf[index].setWordWrap(True)
+                self.check = False
+            
     def process_image(self, frame):
         frame_flipped = cv2.flip(frame, 1)
         detector = cv2.QRCodeDetector()
@@ -445,8 +447,7 @@ class UI():
         check = False
         if data:
             self.data = json.loads(data)
-        
-        if self.compare_data():
+        if data and self.compare_data() :
             self.prev_data = self.data
             check = True
 
@@ -464,29 +465,37 @@ class UI():
         return False
 
     def classify_product(self, qr_code_data :dict):
-        direction = 0
-        pub_direction = rospy.Publisher(
-            self.topic_direction,
-            Int16,
-            queue_size=20
-        )
-        print(direction)    
-        
+        direction = "000"
         color = qr_code_data.get("color")
         if qr_code_data:
             print("Classify product base on qrcode:", qr_code_data)
             if color == "green":
-                direction = 1
+                direction = "001"
             elif color == "red":
-                direction = 2
+                direction = "100"
             elif color == "blue":
-                direction = 3
+                direction = "010"
             print(direction)    
-            pub_direction(direction)
+            self.speed0 = ""
+            if self.mode == 1:
+                self.speed = f"M0{direction}255|255|0|M2{direction}255|255|0|"
+                self.speed0 = f"M0{direction}0|0|0|M2{direction}0|0|0|"
+            elif self.mode == 2:
+                self.speed = f"M0{direction}255|0|255|M1{direction}255|0|255|"
+                self.speed0 = f"M0{direction}|0|0|M1{direction}0|0|0|"
+                pass
+            elif self.mode == 3:
+                self.speed = f"M0{direction}|255|255|M3{direction}0|255|255|"
+                self.speed0 = f"M0{direction}0|0|0|M3{direction}0|0|0|"
+                pass
+            self.pub_direction.publish(self.speed)
+            
+            QTimer.singleShot(5000, lambda:self.out(self.speed0))
 
         else:
             print("No Qrcode found or unable to read Qrcode")
-    
+    def out(self, speed0):
+        self.pub_direction.publish(speed0)
     def dic_module_1(self):
         pub = rospy.Publisher("module_1_topic",String, queue_size=10)
         pub.publish("module_1")
