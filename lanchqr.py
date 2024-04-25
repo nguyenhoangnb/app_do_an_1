@@ -369,9 +369,9 @@ class UI():
                 mydb = MY_DB()
                 mydb.connect("data.db")
                 if not mydb.check_value_exist("consumer_goods","id",self.data["id"]) and self.data["id"]!=0:
-                    mydb.insert_data("consumer_goods",self.data )
+                    mydb.insert_data("consumer_goods",{"id":self.data["id"]} )
                 if mydb.check_value_exist("consumer_goods", "id",self.data["id"]):
-                    mydb.update_amount("consumer_goods",self.data)
+                    mydb.update_amount("consumer_goods",{"id":self.data["id"]})
                 mydb.close()
                 labels_name = [
                     self.autoworkHandle.lbl_auw_3,
@@ -414,9 +414,9 @@ class UI():
                 mydb = MY_DB()
                 mydb.connect("data.db")
                 if not mydb.check_value_exist("consumer_goods","id",self.data["id"]) and self.data["id"]!=0:
-                    mydb.insert_data("consumer_goods",self.data )
+                    mydb.insert_data("consumer_goods",{"id":self.data["id"]} )
                 if mydb.check_value_exist("consumer_goods", "id",self.data["id"]):
-                    mydb.update_amount("consumer_goods",self.data)
+                    mydb.update_amount("consumer_goods",{"id":self.data["id"]})
                 mydb.close()
                 labels_name = [
                     self.manualHandle.lbl_manual_2,
