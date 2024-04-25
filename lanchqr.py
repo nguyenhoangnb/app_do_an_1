@@ -360,7 +360,7 @@ class UI():
             cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
             h, w, ch = cv_image.shape
             bytes_per_line = ch * w
-            self.check = self.processdirection_image(cv_image)
+            self.check = self.process_image(cv_image)
             qt_img = QImage(cv_image.data, w, h, bytes_per_line, QImage.Format_RGB888)
             pixmap = QPixmap.fromImage(qt_img)
             self.autoworkHandle.lbl_img.setPixmap(pixmap.scaled(self.autoworkHandle.lbl_img.size(), Qt.KeepAspectRatio))

@@ -85,10 +85,12 @@ class MY_DB():
         conditions = []
         values = []
         for key, value in data.items():
-            conditions.append(f"{key} = ?")
+            print(key,value)
+            conditions.append(f"{key} = {value}")
             values.append(value)
         query += " AND ".join(conditions)
-        cursor.execute(query, values)
+        print(query)
+        cursor.execute(query)
 
 #### code sử dụng classs MY_DB()
 #Create table
