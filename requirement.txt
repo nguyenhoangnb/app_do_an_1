@@ -2,3 +2,4 @@ PyQt5
 opencv-python
 numpy
 mysql-connector-python
+pyuic5

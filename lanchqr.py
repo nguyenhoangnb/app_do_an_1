@@ -128,7 +128,7 @@ class UI():
         self.bridge = CvBridge()
         self.programUi.show()
         self.timer = QTimer()
-        
+        self.mode = 1
         self.capture = cv2.VideoCapture(0)
         # self.start = False
         # self.timer.timeout.connect(lambda:self.insert_table_auto())
@@ -204,7 +204,6 @@ class UI():
             queue_size=10
         )
         # rate = rospy.Rate(1)
-        self.mode = 0
         if text == "High speed":
             self.mode = 1
         if text == "Normal speed":
