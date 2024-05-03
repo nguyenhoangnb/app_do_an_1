@@ -3,6 +3,8 @@ from handle import programHandle
 from handle import autoworkHandle
 from handle import manualHandle
 from pysql import *
+from APP import auto_start
+
 import re
 import json
 from PyQt5.QtCore import QTimer, Qt
@@ -33,6 +35,11 @@ speed_dc = {
     "Motor 11":0,
     "Motor 12":0,
     
+}
+
+direction = {"green":"001",
+            "red":"100",
+            "blue":"010",
 }
 
 speed_module = {
@@ -82,9 +89,11 @@ class UI():
         self.idx = 0
         self.speed_dc = speed_dc
         self.speed_dc_pred = self.speed_dc
+        self.speed = ""
+        self.speed0 = ""
         self.data = data
         self.prev_data = pre_data
-        
+        self.direction = direction
         self.speed_module = speed_module
         self.speed_module_pred = speed_module
         #program UI
@@ -152,6 +161,7 @@ class UI():
             String,
             queue_size=10
         )
+     
        
     def automation(self):
         self.programUi.hide()
@@ -179,9 +189,6 @@ class UI():
             lambda msg: self.imuCallback(msg,1)
         )
         self.pub_out_timer = QTimer()
-        self.pub_ = rospy.Publisher('number',Int16,queue_size=10)
-        # self.pub_out_timer.timeout.connect(self.out)
-        # self.pub_out_timer.start(5000)
         self.timer.timeout.connect(self.show_img_automation)
         self.timer.start(1000//30) 
         
@@ -210,20 +217,21 @@ class UI():
             self.mode = 2
         if text == "Slow speed":
             self.mode = 3
-        # self.pub_speed_auto.publish(self.mode)
         
- 
     def stop_auto(self):
         self.speed_dc_pred = self.speed_dc
         self.autoworkHandle.btn_auw_stop.hide()
         self.autoworkHandle.btn_auw_continue.show()
         for x in self.speed_dc:
             self.speed_dc[x] = 0
+        self.speed0 = f"M0{direction}0|0|0|M2{direction}0|0|0|"
+        self.pub_direction.publish(self.speed0)
+        
     def continue_auto(self):
         self.speed_dc = self.speed_dc_pred
         self.autoworkHandle.btn_auw_stop.show()
         self.autoworkHandle.btn_auw_continue.hide()
-        
+        self.pub_direction.publish(self.speed)
     def back_auto_work(self):
         self.autoworkUI.hide()
         self.autoUI.show()
@@ -286,6 +294,7 @@ class UI():
         self.manualHandle.btn_manual_stop.show()
         if self.idx == 0:
             json_data = json.dumps(self.speed_module, ensure_ascii=False)
+            speed = f"M0"
             self.pub_speed_module.publish(json_data)
         elif self.idx == 1:
             json_data = json.dumps(self.speed_dc, ensure_ascii=False)
@@ -464,36 +473,35 @@ class UI():
         return False
 
     def classify_product(self, qr_code_data :dict):
-        direction = "000"
+        module = 0
         color = qr_code_data.get("color")
         if qr_code_data:
             print("Classify product base on qrcode:", qr_code_data)
             if color == "green":
-                direction = "001"
+                module = 1
             elif color == "red":
-                direction = "100"
+                module = 2
             elif color == "blue":
-                direction = "010"
+                module = 3
             print(direction)    
-            self.speed0 = ""
             if self.mode == 1:
-                self.speed = f"M0{direction}255|255|0|M2{direction}255|255|0|"
-                self.speed0 = f"M0{direction}0|0|0|M2{direction}0|0|0|"
+                self.speed = f"M0{self.direction[color]}255|255|0|M{module}{self.direction[color]}255|255|0|"
+                self.speed0 = f"M0{self.direction[color]}0|0|0|M{module}{self.direction[color]}0|0|0|"
             elif self.mode == 2:
-                self.speed = f"M0{direction}255|0|255|M1{direction}255|0|255|"
-                self.speed0 = f"M0{direction}|0|0|M1{direction}0|0|0|"
+                self.speed = f"M0{self.direction[color]}255|0|255|M{module}{self.direction[color]}255|0|255|"
+                self.speed0 = f"M0{self.direction[color]}|0|0|M{module}{self.direction[color]}0|0|0|"
                 pass
             elif self.mode == 3:
-                self.speed = f"M0{direction}|255|255|M3{direction}0|255|255|"
-                self.speed0 = f"M0{direction}0|0|0|M3{direction}0|0|0|"
+                self.speed = f"M0{self.direction[color]}|255|255|M{module}{self.direction[color]}0|255|255|"
+                self.speed0 = f"M0{self.direction[color]}0|0|0|M{module}{self.direction[color]}0|0|0|"
                 pass
             self.pub_direction.publish(self.speed)
             
-            QTimer.singleShot(5000, lambda:self.out(self.speed0))
+            QTimer.singleShot(5000, lambda:self.set_speed_to_zero(self.speed0))
 
         else:
             print("No Qrcode found or unable to read Qrcode")
-    def out(self, speed0):
+    def set_speed_to_zero(self, speed0):
         self.pub_direction.publish(speed0)
     def dic_module_1(self):
         pub = rospy.Publisher("module_1_topic",String, queue_size=10)

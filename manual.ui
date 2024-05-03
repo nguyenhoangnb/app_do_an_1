@@ -304,9 +304,9 @@ border-radius:16px;
   <widget class="QPushButton" name="btn_manual_back">
    <property name="geometry">
     <rect>
-     <x>1030</x>
+     <x>990</x>
      <y>20</y>
-     <width>141</width>
+     <width>181</width>
      <height>41</height>
     </rect>
    </property>
@@ -319,7 +319,7 @@ border-radius:16px;
     <string notr="true">background-color:rgb(85, 255, 127)</string>
    </property>
    <property name="text">
-    <string>Chuyển chế độ</string>
+    <string>Setup Systerm Funtion</string>
    </property>
   </widget>
   <widget class="QPlainTextEdit" name="plt_manual_speed">
