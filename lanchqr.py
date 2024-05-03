@@ -38,8 +38,8 @@ speed_dc = {
 }
 
 direction = {"green":"001",
-            "red":"100",
-            "blue":"010",
+            "red":"011",
+            "blue":"110",
 }
 
 speed_module = {
@@ -49,6 +49,23 @@ speed_module = {
     "Module 4":0
 }
 
+speed_high = {
+    "red":[255, 255, 0],
+    "green":[0, 255, 255],
+    "blue":[255, 0, 255]
+}
+
+speed_normal = {
+    "red":[200, 200, 0],
+    "green":[0, 200, 200],
+    "blue":[200, 0, 200]
+}
+
+speed_low = {
+    "red":[100, 100, 0],
+    "green":[0, 100, 100],
+    "blue":[100, 0, 100]
+}
 
 pre_data = {
     "id":1,
@@ -139,10 +156,6 @@ class UI():
         self.timer = QTimer()
         self.mode = 1
         self.capture = cv2.VideoCapture(0)
-        # self.start = False
-        # self.timer.timeout.connect(lambda:self.insert_table_auto())
-        # self.timer.timeout.connect(lambda:self.insert_table_manual())
-        # self.timer.start(10)
         self.check = False
         rospy.init_node("img_node", anonymous=True)
         self.pub_speed_motor = rospy.Publisher(
@@ -177,9 +190,9 @@ class UI():
         self.programUi.close()
         self.manualUI.close()
         self.autoworkUI.show()
-        self.timer = QTimer()
-        self.timer.timeout.connect(lambda:self.insert_table_auto())
-        # self.timer.start(100)  
+        self.timer_auto = QTimer()
+        self.timer_auto.timeout.connect(lambda:self.insert_table_auto())
+        self.timer_auto.start(100)  
         
         # self.show_img_automation()
         
@@ -188,12 +201,11 @@ class UI():
             Imu,
             lambda msg: self.imuCallback(msg,1)
         )
+        self.timer_auto_image = QTimer()
         self.pub_out_timer = QTimer()
-        self.timer.timeout.connect(self.show_img_automation)
-        self.timer.start(1000//30) 
-        
-    
-       
+        self.timer_auto_image.timeout.connect(self.show_img_automation)
+        self.timer_auto_image.start(1000//30) 
+           
     def back_to_main(self):
         self.autoUI.hide()
         self.autoworkUI.hide()
@@ -243,8 +255,9 @@ class UI():
         self.programUi.close()
         self.autoUI.close()
         self.autoworkUI.close()
-        self.timer = QTimer()
-        self.timer.timeout.connect(lambda:self.insert_table_manual())
+        self.timer_manual = QTimer()
+        self.timer_manual.timeout.connect(lambda:self.insert_table_manual())
+        self.timer_manual.start()
         self.manualHandle.btn_manual_continue.hide()
         self.sub_imu = rospy.Subscriber(
             self.topic_imu,
@@ -252,9 +265,10 @@ class UI():
             lambda msg: self.imuCallback(msg,2)
         )
         # rospy.Timer(rospy.Duration(1), self.update_image)
+        self.timer_manual_show = QTimer()
         self.manualHandle.cbox_manual_function.currentIndexChanged.connect(self.manual_change)
-        self.timer.timeout.connect(self.sub_callback_manual)
-        self.timer.start(1000//30)  
+        self.timer_manual_show.timeout.connect(self.sub_callback_manual)
+        self.timer_manual_show.start(1000//30)  
        
         self.manualHandle.btn_manual_set.clicked.connect(lambda: self.set_speed_manual(self.idx))
     
@@ -341,6 +355,7 @@ class UI():
             self.autoworkHandle.tbl_auto_quantity.insertRow(row_num)
             for col_num, col_data in enumerate(row_data):
                 if label1[col_num] == "color" or label1[col_num] == "id" or label1[col_num] == "amount":
+                    print(str(label1[col_num])+" " + str(col_data))
                     self.autoworkHandle.tbl_auto_quantity.setItem(row_num, col_num, QTableWidgetItem(str(col_data))) 
         mydb.close()
     def insert_table_manual(self):
@@ -350,6 +365,7 @@ class UI():
         self.result = mydb.select_all("consumer_goods")
         label = ["id", "color", "amount"]
         label1 = mydb.get_table_columns("consumer_goods")  
+        print(label1)
         self.manualHandle.tbl_manual_quantity.setColumnCount(len(label))
         self.manualHandle.tbl_manual_quantity.setHorizontalHeaderLabels(label)
         for row_num, row_data in enumerate(self.result):
@@ -365,6 +381,7 @@ class UI():
     def show_img_automation(self):
         ret, cv_image = self.capture.read()
         if ret:
+            cv_image = cv2.flip(cv_image, 1)
             cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
             h, w, ch = cv_image.shape
             bytes_per_line = ch * w
@@ -377,7 +394,7 @@ class UI():
                 mydb = MY_DB()
                 mydb.connect("data.db")
                 if not mydb.check_value_exist("consumer_goods","id",self.data["id"]) and self.data["id"]!=0:
-                    mydb.insert_data("consumer_goods",{"id":self.data["id"]} )
+                    mydb.insert_data("consumer_goods",self.data )
                 if mydb.check_value_exist("consumer_goods", "id",self.data["id"]):
                     mydb.update_amount("consumer_goods",{"id":self.data["id"]})
                 mydb.close()
@@ -400,6 +417,7 @@ class UI():
                     if index < len(labels_inf):
                         labels_name[index].setText(key)
                         labels_inf[index].setText(str(self.data[key]))
+                        # print(str(self.data[key]))
                         labels_inf[index].setWordWrap(True)
                 self.check = False
  
@@ -408,6 +426,8 @@ class UI():
         # capture = cv2.VideoCapture("/dev/video0")
         ret, cv_image = self.capture.read()
         if ret:
+            cv_image = cv2.flip(cv_image, 1)
+            
             cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
             h, w, ch = cv_image.shape
             bytes_per_line = ch * w
@@ -478,21 +498,21 @@ class UI():
         if qr_code_data:
             print("Classify product base on qrcode:", qr_code_data)
             if color == "green":
-                module = 1
-            elif color == "red":
-                module = 2
-            elif color == "blue":
                 module = 3
+            elif color == "red":
+                module = 1
+            elif color == "blue":
+                module = 2
             print(direction)    
             if self.mode == 1:
-                self.speed = f"M0{self.direction[color]}255|255|0|M{module}{self.direction[color]}255|255|0|"
+                self.speed = f"M0{self.direction[color]}{speed_high[color][0]}|{speed_high[color][1]}|{speed_high[color][2]}|M{module}{self.direction[color]}{speed_high[color][0]}|{speed_high[color][1]}|{speed_high[color][2]}"
                 self.speed0 = f"M0{self.direction[color]}0|0|0|M{module}{self.direction[color]}0|0|0|"
             elif self.mode == 2:
-                self.speed = f"M0{self.direction[color]}255|0|255|M{module}{self.direction[color]}255|0|255|"
+                self.speed = f"M0{self.direction[color]}{speed_normal[color][0]}|{speed_normal[color][1]}|{speed_normal[color][2]}|M{module}{self.direction[color]}{speed_normal[color][0]}|{speed_normal[color][1]}|{speed_normal[color][2]}"
                 self.speed0 = f"M0{self.direction[color]}|0|0|M{module}{self.direction[color]}0|0|0|"
                 pass
             elif self.mode == 3:
-                self.speed = f"M0{self.direction[color]}|255|255|M{module}{self.direction[color]}0|255|255|"
+                self.speed = f"M0{self.direction[color]}{speed_low[color][0]}|{speed_low[color][1]}|{speed_low[color][2]}|M{module}{self.direction[color]}{speed_low[color][0]}|{speed_low[color][1]}|{speed_low[color][2]}"
                 self.speed0 = f"M0{self.direction[color]}0|0|0|M{module}{self.direction[color]}0|0|0|"
                 pass
             self.pub_direction.publish(self.speed)

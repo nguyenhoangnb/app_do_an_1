@@ -3,11 +3,11 @@ import cv2
 import json
 
 qr_code = """{
-    "id": 1,
-    "color": "red",
+    "id": 3,
+    "color": "green",
     "address": "Dong yen village, Yen Lam Commune, Yen Mo Distric, Ninh Binh Province",
     "type": "consumer goods",
-    "price": 10000.0
+    "price": 20000.0
 }"""
 
 qr = qrcode.QRCode(version=1, box_size=10, border=5)

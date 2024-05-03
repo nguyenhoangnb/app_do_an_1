@@ -33,11 +33,12 @@ class auto_start():
         
 
     def imu(self):
-        print("roscore")
         cmd = "gnome-terminal -e 'bash -c \"rosrun  handsfree_ros_imu hfi_a9_ros.py\"'"
         os.system(cmd)
 
-
+    def serial(self):
+        cmd = "gnome-terminal -e 'bash -c \"rosrun rosrun rosserial_python serial_node.py /dev/ttyACM0\"'"
+        os.system(cmd)
 
     
     def ekf(self):
@@ -47,8 +48,6 @@ class auto_start():
         
 
  
-
-    
 
     def run(self):
         print('4.Run')
@@ -63,6 +62,7 @@ if __name__ == "__main__":
 
     a = auto_start()
     t1 = threading.Thread(target=a.run_roscore)
+    t2 = threading.Thread(target=a.serial)
     t5 = threading.Thread(target= a.imu)
     t4 = threading.Thread(target= a.run)
 
@@ -70,7 +70,8 @@ if __name__ == "__main__":
     t1.start()
     time.sleep(1)
 
-  
+    t2.start()
+    time.sleep(1)
     
     t5.start()
     time.sleep(1)
