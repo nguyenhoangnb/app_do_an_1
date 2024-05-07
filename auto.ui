@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>589</width>
-    <height>450</height>
+    <width>614</width>
+    <height>335</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>AUTO</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:rgb(235, 238, 255)</string>
+   <string notr="true">background-color:rgb(242, 252, 251)</string>
   </property>
   <widget class="QPushButton" name="btn_auto_set">
    <property name="geometry">
@@ -31,10 +31,11 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:rgb(255, 255, 127);</string>
+    <string notr="true">background-color:rgb(255, 255, 127);
+border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Đặt</string>
+    <string>Set</string>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_auto_02">
@@ -52,10 +53,14 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
+    <string notr="true">background-color:rgb(86, 200, 226);
+border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Tốc độ phân loại</string>
+    <string>Speed</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
   <widget class="QComboBox" name="cb_auto_speed">
@@ -73,21 +78,22 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:#fff;</string>
+    <string notr="true">background-color:rgb(128, 224, 245);
+border-radius:10px;</string>
    </property>
    <item>
     <property name="text">
-     <string>Nhanh</string>
+     <string>High speed</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Thường</string>
+     <string>Normal speed</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Chậm</string>
+     <string>Slow speed</string>
     </property>
    </item>
   </widget>
@@ -106,10 +112,11 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:rgb(255, 255, 127);</string>
+    <string notr="true">background-color:rgb(255, 255, 127);
+border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Quay lại</string>
+    <string>Back</string>
    </property>
   </widget>
   <widget class="QPushButton" name="btn_auto_start">
@@ -127,10 +134,11 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:rgb(255, 255, 127);</string>
+    <string notr="true">background-color:rgb(255, 255, 127);
+border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Bắt đầu</string>
+    <string>Start</string>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_auto_01">
@@ -138,7 +146,7 @@
     <rect>
      <x>30</x>
      <y>20</y>
-     <width>121</width>
+     <width>171</width>
      <height>61</height>
     </rect>
    </property>
@@ -148,10 +156,14 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:rgb(200, 255, 176);</string>
+    <string notr="true">background-color:rgb(200, 255, 176);
+border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Tự động</string>
+    <string>Automation</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>

@@ -11,12 +11,12 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>MANUAL</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color:rgb(235, 238, 255)</string>
   </property>
-  <widget class="QLabel" name="lbl_byh_02">
+  <widget class="QLabel" name="lbl_manual_02">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -59,10 +59,10 @@
 border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Đặt</string>
+    <string>Set</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="cb_motor">
+  <widget class="QComboBox" name="cb_manual_motor">
    <property name="geometry">
     <rect>
      <x>380</x>
@@ -130,7 +130,7 @@ border-radius:10px;</string>
     </property>
    </item>
   </widget>
-  <widget class="QPushButton" name="btn_manual_module_4">
+  <widget class="QPushButton" name="btn_manual_module_1">
    <property name="geometry">
     <rect>
      <x>470</x>
@@ -277,7 +277,7 @@ border-radius:16px;
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="lbl_byh_01">
+  <widget class="QLabel" name="lbl_manual_01">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -304,9 +304,9 @@ border-radius:16px;
   <widget class="QPushButton" name="btn_manual_back">
    <property name="geometry">
     <rect>
-     <x>1030</x>
+     <x>990</x>
      <y>20</y>
-     <width>141</width>
+     <width>181</width>
      <height>41</height>
     </rect>
    </property>
@@ -319,7 +319,7 @@ border-radius:16px;
     <string notr="true">background-color:rgb(85, 255, 127)</string>
    </property>
    <property name="text">
-    <string>Chuyển chế độ</string>
+    <string>Setup Systerm Funtion</string>
    </property>
   </widget>
   <widget class="QPlainTextEdit" name="plt_manual_speed">
@@ -343,7 +343,7 @@ border-radius:16px;
     <string/>
    </property>
   </widget>
-  <widget class="QTableWidget" name="tbl_quantity">
+  <widget class="QTableWidget" name="tbl_manual_quantity">
    <property name="geometry">
     <rect>
      <x>150</x>
@@ -390,7 +390,10 @@ border-radius:16px;
 border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Thông tin hàng</string>
+    <string>Information of goods</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_manual_4">
@@ -412,7 +415,10 @@ border-radius:10px;</string>
 border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Thông tin hàng</string>
+    <string>Information of goods</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_manual_2">
@@ -434,10 +440,13 @@ border-radius:10px;</string>
 border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Thông tin hàng</string>
+    <string>Information of goods</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="lbl_maunual_3">
+  <widget class="QLabel" name="lbl_manual_3">
    <property name="geometry">
     <rect>
      <x>720</x>
@@ -456,7 +465,10 @@ border-radius:10px;</string>
 border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Thông tin hàng</string>
+    <string>Information of goods</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_manual_5">
@@ -478,7 +490,10 @@ border-radius:10px;</string>
 border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Thông tin hàng</string>
+    <string>Information of goods</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_img">
@@ -582,31 +597,10 @@ border-radius:10px;</string>
 border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Bắt đầu</string>
+    <string>Start</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btn_byh_stop">
-   <property name="geometry">
-    <rect>
-     <x>460</x>
-     <y>120</y>
-     <width>171</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color:rgb(223, 201, 104);</string>
-   </property>
-   <property name="text">
-    <string>Tạm dừng</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btn_manual_continue">
+  <widget class="QPushButton" name="btn_manual_stop">
    <property name="geometry">
     <rect>
      <x>460</x>
@@ -625,7 +619,29 @@ border-radius:10px;</string>
 border-radius:10px;</string>
    </property>
    <property name="text">
-    <string>Tiếp tục</string>
+    <string>Stop</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_manual_continue">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>120</y>
+     <width>171</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(255, 255, 127);
+border-radius:10px;</string>
+   </property>
+   <property name="text">
+    <string>Continue</string>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_manual_inf_1">
@@ -726,7 +742,7 @@ border-radius:10px;</string>
     <string notr="true">background-color:rgb(216, 231, 33);</string>
    </property>
    <property name="text">
-    <string>Góc nghiêng</string>
+    <string>Angle</string>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_axis">
@@ -745,7 +761,7 @@ border-radius:10px;</string>
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="lbl_maual_x_value">
+  <widget class="QLabel" name="lbl_manual_x_value">
    <property name="geometry">
     <rect>
      <x>890</x>
@@ -779,7 +795,7 @@ border-radius:10px;</string>
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="lbl_maual_x">
+  <widget class="QLabel" name="lbl_manual_x">
    <property name="geometry">
     <rect>
      <x>790</x>
@@ -799,7 +815,7 @@ border-radius:10px;</string>
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="lbl_maual_y">
+  <widget class="QLabel" name="lbl_manual_y">
    <property name="geometry">
     <rect>
      <x>1000</x>
@@ -817,28 +833,6 @@ border-radius:10px;</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btn_manual_module_1">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>20</y>
-     <width>141</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color:rgb(255, 255, 127);
-border-radius:10px;</string>
-   </property>
-   <property name="text">
-    <string>Output module 2</string>
    </property>
   </widget>
  </widget>
