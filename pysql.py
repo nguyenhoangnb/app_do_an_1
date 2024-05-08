@@ -91,6 +91,27 @@ class MY_DB():
         query += " AND ".join(conditions)
         print(query)
         cursor.execute(query)
+    def select_data(self, table_name, condition=None):
+        cursor = self.conn.cursor()
+        if condition:
+            query = f"SELECT * FROM {table_name} WHERE {condition};"
+        else:
+            query = f"SELECT * FROM {table_name};"
+
+        cursor.execute(query)
+        result = cursor.fetchall()
+        result_list = result[0]
+        cursor.execute("PRAGMA table_info({})".format(table_name))
+        columns = cursor.fetchall()
+        column_names = [column[1] for column in columns]
+        dic = {}
+        for col, name in zip(result_list, column_names):
+            dic[name] = col
+        return dic
+    # def select_all_columns(self, table_name):
+    #     cursor = self.conn.cursor()
+        
+    #     return column_names
 
 #### code sử dụng classs MY_DB()
 #Create table

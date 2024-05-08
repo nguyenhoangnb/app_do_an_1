@@ -60,7 +60,9 @@ speed_normal = {
     "green":[0, 200, 200],
     "blue":[200, 0, 200]
 }
-
+data1 = {
+    "id":0
+}
 speed_low = {
     "red":[100, 100, 0],
     "green":[0, 100, 100],
@@ -273,7 +275,7 @@ class UI():
         self.manualHandle.btn_manual_set.clicked.connect(lambda: self.set_speed_manual(self.idx))
     
     def manual_change(self, idx):
-        print(idx)
+        # print(idx)
         if idx == 0:
             self.manualHandle.cb_manual_module.show()
             self.manualHandle.cb_manual_motor.hide()
@@ -287,21 +289,21 @@ class UI():
             dc = self.manualHandle.plt_manual_speed.toPlainText()
             idx = self.manualHandle.cb_manual_motor.currentText()
             if (not self.kiem_tra(dc)):
-                print(dc)
+                # print(dc)
                 self.manualHandle.plt_manual_speed.setPlainText("0")
             else:
                 self.speed_dc[idx] = int(self.manualHandle.plt_manual_speed.toPlainText())
                 
-            print(self.speed_dc)
+            # print(self.speed_dc)
         elif current_idx == 0:
             mod_speed = self.manualHandle.plt_manual_speed.toPlainText()
             idx_mod = self.manualHandle.cb_manual_module.currentText()
-            print(idx_mod)
+            # print(idx_mod)
             if not self.kiem_tra(mod_speed):
                 self.manualHandle.plt_manual_speed.setPlainText("0")
             else:
                 self.speed_module[idx_mod] = int(self.manualHandle.plt_manual_speed.toPlainText())
-            print(mod_speed)
+            # print(mod_speed)
             
     def start_manual(self):
         self.manualHandle.btn_manual_continue.hide()
@@ -355,7 +357,7 @@ class UI():
             self.autoworkHandle.tbl_auto_quantity.insertRow(row_num)
             for col_num, col_data in enumerate(row_data):
                 if label1[col_num] == "color" or label1[col_num] == "id" or label1[col_num] == "amount":
-                    print(str(label1[col_num])+" " + str(col_data))
+                    # print(str(label1[col_num])+" " + str(col_data))
                     self.autoworkHandle.tbl_auto_quantity.setItem(row_num, col_num, QTableWidgetItem(str(col_data))) 
         mydb.close()
     def insert_table_manual(self):
@@ -365,7 +367,7 @@ class UI():
         self.result = mydb.select_all("consumer_goods")
         label = ["id", "color", "amount"]
         label1 = mydb.get_table_columns("consumer_goods")  
-        print(label1)
+        # print(label1)
         self.manualHandle.tbl_manual_quantity.setColumnCount(len(label))
         self.manualHandle.tbl_manual_quantity.setHorizontalHeaderLabels(label)
         for row_num, row_data in enumerate(self.result):
@@ -473,8 +475,14 @@ class UI():
         detector = cv2.QRCodeDetector()
         data, bbox, _ = detector.detectAndDecode(frame_flipped)
         check = False
+        mydb = MY_DB()
+        mydb.connect("data.db")
         if data:
-            self.data = json.loads(data)
+            data1 = json.loads(data)
+            print(data1)
+            self.data = mydb.select_data("goods_data", f"id = {data1['id']}")
+            print(self.data)
+        mydb.close()
         if data and self.compare_data() :
             self.prev_data = self.data
             check = True
@@ -496,14 +504,14 @@ class UI():
         module = 0
         color = qr_code_data.get("color")
         if qr_code_data:
-            print("Classify product base on qrcode:", qr_code_data)
+            # print("Classify product base on qrcode:", qr_code_data)
             if color == "green":
                 module = 3
             elif color == "red":
                 module = 1
             elif color == "blue":
                 module = 2
-            print(direction)    
+            # print(direction)    
             if self.mode == 1:
                 self.speed = f"M0{self.direction[color]}{speed_high[color][0]}|{speed_high[color][1]}|{speed_high[color][2]}|M{module}{self.direction[color]}{speed_high[color][0]}|{speed_high[color][1]}|{speed_high[color][2]}"
                 self.speed0 = f"M0{self.direction[color]}0|0|0|M{module}{self.direction[color]}0|0|0|"
