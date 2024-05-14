@@ -5,6 +5,22 @@ from handle import manualHandle
 from pysql import *
 from APP import auto_start
 
+
+import time
+import subprocess
+import os
+import threading
+
+from ftplib import FTP
+from hashlib import new
+import json
+from urllib import response
+import urllib.request
+import zipfile
+import os
+import shutil
+
+
 import re
 import json
 from PyQt5.QtCore import QTimer, Qt
@@ -21,25 +37,65 @@ from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import Image, Imu
 from std_msgs.msg import Int16, String
 
+class auto_start():
+    def __init__(self):
+        pass
+    def run_roscore(self):
+    	# print("roscore")
+        cmd = "gnome-terminal -e 'bash -c \"rosclean purge -y && roscore\"'"
+        os.system(cmd)
+        
+        print("1.roscore")
+    
+  
+    def clean_ros(self):
+        cmd = f"gnome-terminal -e \"bash -c 'python3 -V && python3 -V && python3 -V && rosclean purge -y'\""
+        subprocess.Popen(cmd,stdout=subprocess.PIPE, shell=True)
+        # subprocess.Popen("rosclean purge -y",stdout=subprocess.PIPE, shell=True)
+        
+
+    def imu(self):
+        cmd = "gnome-terminal -e 'bash -c \"rosrun  handsfree_ros_imu hfi_a9_ros.py\"'"
+        os.system(cmd)
+
+    def serial(self):
+        cmd = "gnome-terminal -e 'bash -c \"rosrun rosrun rosserial_python serial_node.py /dev/ttyACM0\"'"
+        os.system(cmd)
+
+    
+    def ekf(self):
+    	# print("roscore")
+        cmd = "gnome-terminal -e 'bash -c \"rosrun  handsfree_ros_imu hfi_a9_ros.py\"'"
+        os.system(cmd)
+        
+
+ 
+
+    def run(self):
+        print('4.Run')
+        path = "/home/nguyenhoang/System/lanchqr.py"
+        os.system(f"gnome-terminal -e 'bash -c \"python3 {path}\"'")
+
 speed_dc = {
-    "Motor 1":0,
-    "Motor 2":0,
-    "Motor 3":0,
-    "Motor 4":0,
-    "Motor 5":0,
-    "Motor 6":0,
-    "Motor 7":0,
-    "Motor 8":0,
-    "Motor 9":0,
-    "Motor 10":0,
-    "Motor 11":0,
-    "Motor 12":0,
+    "Motor 1":255,
+    "Motor 2":255,
+    "Motor 3":255,
+    "Motor 4":255,
+    "Motor 5":255,
+    "Motor 6":255,
+    "Motor 7":255,
+    "Motor 8":255,
+    "Motor 9":255,
+    "Motor 10":255,
+    "Motor 11":255,
+    "Motor 12":255,
     
 }
 
-direction = {"green":"001",
+direction = {
             "red":"011",
             "blue":"110",
+            "green":"001",
 }
 
 speed_module = {
@@ -52,7 +108,8 @@ speed_module = {
 speed_high = {
     "red":[255, 255, 0],
     "green":[0, 255, 255],
-    "blue":[255, 0, 255]
+    "blue":[255, 0, 255
+            ]
 }
 
 speed_normal = {
@@ -219,11 +276,6 @@ class UI():
     #set speed auto
     def set_speed_auto(self):
         text = self.autoHandle.cb_auto_speed.currentText()
-        self.pub_speed_auto = rospy.Publisher(
-            self.topic_speed_auto,
-            Int16,
-            queue_size=10
-        )
         # rate = rospy.Rate(1)
         if text == "High speed":
             self.mode = 1
@@ -289,7 +341,6 @@ class UI():
             dc = self.manualHandle.plt_manual_speed.toPlainText()
             idx = self.manualHandle.cb_manual_motor.currentText()
             if (not self.kiem_tra(dc)):
-                # print(dc)
                 self.manualHandle.plt_manual_speed.setPlainText("0")
             else:
                 self.speed_dc[idx] = int(self.manualHandle.plt_manual_speed.toPlainText())
@@ -311,10 +362,10 @@ class UI():
         if self.idx == 0:
             json_data = json.dumps(self.speed_module, ensure_ascii=False)
             speed = f"M0"
-            self.pub_speed_module.publish(json_data)
+            # self.pub_speed_module.publish(json_data)
         elif self.idx == 1:
             json_data = json.dumps(self.speed_dc, ensure_ascii=False)
-            self.pub_speed_motor.publish(json_data)
+            # self.pub_speed_motor.publish(json_data)
             
     def stop_manual(self):
         self.manualHandle.btn_manual_stop.hide()
@@ -333,7 +384,6 @@ class UI():
     def continue_manual(self):
         self.manualHandle.btn_manual_stop.show()
         self.manualHandle.btn_manual_continue.hide()
-
         if self.idx == 0:
             self.speed_module = self.speed_module_pred
             json_data = json.dumps(self.speed_module, ensure_ascii=False)
@@ -391,6 +441,7 @@ class UI():
             qt_img = QImage(cv_image.data, w, h, bytes_per_line, QImage.Format_RGB888)
             pixmap = QPixmap.fromImage(qt_img)
             self.autoworkHandle.lbl_img.setPixmap(pixmap.scaled(self.autoworkHandle.lbl_img.size(), Qt.KeepAspectRatio))
+            # print(f"this is {self.data}")
             if self.check:
                 self.classify_product(self.data)
                 mydb = MY_DB()
@@ -479,8 +530,8 @@ class UI():
         mydb.connect("data.db")
         if data:
             data1 = json.loads(data)
-            print(data1)
-            self.data = mydb.select_data("goods_data", f"id = {data1['id']}")
+            # print(data1)
+            self.data = mydb.select_data("consumer_goods", f"id = {data1['id']}")
             print(self.data)
         mydb.close()
         if data and self.compare_data() :
@@ -489,7 +540,8 @@ class UI():
 
         if bbox is not None:
             # print("Waiting for QR code. Product Information:")
-            pass
+            self.prev_data = pre_data
+            # pass
 
         return check
 
@@ -503,6 +555,8 @@ class UI():
     def classify_product(self, qr_code_data :dict):
         module = 0
         color = qr_code_data.get("color")
+        print(color)
+        # print(qr_code_data)
         if qr_code_data:
             # print("Classify product base on qrcode:", qr_code_data)
             if color == "green":
@@ -513,14 +567,15 @@ class UI():
                 module = 2
             # print(direction)    
             if self.mode == 1:
-                self.speed = f"M0{self.direction[color]}{speed_high[color][0]}|{speed_high[color][1]}|{speed_high[color][2]}|M{module}{self.direction[color]}{speed_high[color][0]}|{speed_high[color][1]}|{speed_high[color][2]}"
+                self.speed = f"M0{self.direction[color]}{speed_high[color][0]}|{speed_high[color][1]}|{speed_high[color][2]}|M{module}{self.direction[color]}{speed_high[color][0]}|{speed_high[color][1]}|{speed_high[color][2]}|"
+                print(self.speed)
                 self.speed0 = f"M0{self.direction[color]}0|0|0|M{module}{self.direction[color]}0|0|0|"
             elif self.mode == 2:
-                self.speed = f"M0{self.direction[color]}{speed_normal[color][0]}|{speed_normal[color][1]}|{speed_normal[color][2]}|M{module}{self.direction[color]}{speed_normal[color][0]}|{speed_normal[color][1]}|{speed_normal[color][2]}"
-                self.speed0 = f"M0{self.direction[color]}|0|0|M{module}{self.direction[color]}0|0|0|"
+                self.speed = f"M0{self.direction[color]}{speed_normal[color][0]}|{speed_normal[color][1]}|{speed_normal[color][2]}|M{module}{self.direction[color]}{speed_normal[color][0]}|{speed_normal[color][1]}|{speed_normal[color][2]}|"
+                self.speed0 = f"M0{self.direction[color]}|0|0|M{module}{self    .direction[color]}0|0|0|"
                 pass
             elif self.mode == 3:
-                self.speed = f"M0{self.direction[color]}{speed_low[color][0]}|{speed_low[color][1]}|{speed_low[color][2]}|M{module}{self.direction[color]}{speed_low[color][0]}|{speed_low[color][1]}|{speed_low[color][2]}"
+                self.speed = f"M0{self.direction[color]}{speed_low[color][0]}|{speed_low[color][1]}|{speed_low[color][2]}|M{module}{self.direction[color]}{speed_low[color][0]}|{speed_low[color][1]}|{speed_low[color][2]}|"
                 self.speed0 = f"M0{self.direction[color]}0|0|0|M{module}{self.direction[color]}0|0|0|"
                 pass
             self.pub_direction.publish(self.speed)
@@ -531,17 +586,80 @@ class UI():
             print("No Qrcode found or unable to read Qrcode")
     def set_speed_to_zero(self, speed0):
         self.pub_direction.publish(speed0)
+        print("PUBLISH 0")
     def dic_module_1(self):
-        pub = rospy.Publisher("module_1_topic",String, queue_size=10)
-        pub.publish("module_1")
+        idx_speed = [0, 1, 2, 3, 4, 5]
+        speed = "M0"
+        color = "red"
+        module = 1
+        speed += f"{self.direction[color]}"
+        speed0 = speed
+        value = list(speed_dc.values())
+        for idx, i in enumerate(idx_speed):
+            if idx == 2:
+                speed = speed + f"{value[i]}|" + f"M{module}{self.direction[color]}"
+                speed0 = speed0 + f"0|" + f"M{module}{self.direction[color]}"
+            elif idx == 0:
+                speed = speed + f"{value[i]}|"
+                speed0 = speed0 + f"0|"
+            else:
+                speed = speed + f"{value[i]}|"
+                speed0 = speed0 + f"0|"
+        # speed +="|"
+        # speed0 +="|"
+        print(speed)
+        # self.speed0 = f"M0{self.direction[color]}0|0|0|M{module}{self.direction[color]}0|0|0|"
+        
+        print(speed0)
+        self.pub_direction.publish(speed)
+        QTimer.singleShot(5000, lambda:self.set_speed_to_zero(speed0))
+        
+        
+            
     
     def dic_module_2(self):
-        pub = rospy.Publisher("module_2_topic",String, queue_size=10)
-        pub.publish("module_2")
+        idx_speed = [0, 1, 2, 6, 7, 8]
+        speed = "M0"
+        color = "blue"
+        module = 2
+        speed += f"{self.direction[color]}"
+        speed0 = speed
+        value = list(speed_dc.values())
+        for idx, i in enumerate(idx_speed):
+            if idx == 2:
+                speed = speed + f"{value[i]}|" + f"M{module}{self.direction[color]}"
+                speed0 = speed0 + f"0|" + f"M{module}{self.direction[color]}"
+            elif idx == 0:
+                speed = speed + f"{value[i]}|"
+                speed0 = speed0 + f"0|"
+            else:
+                speed = speed + f"{value[i]}|"
+                speed0 = speed0 + f"0|"
+        print(speed)
+        self.pub_direction.publish(speed)
+        QTimer.singleShot(5000, lambda:self.set_speed_to_zero(speed0))
     
     def dic_module_3(self):
-        pub = rospy.Publisher("module_3_topic",String, queue_size=10)
-        pub.publish("module_3")
+        idx_speed = [0, 1, 2, 9, 10, 11]
+        speed = "M0"
+        color = "green"
+        module = 3
+        speed += f"{self.direction[color]}"
+        speed0 = speed
+        value = list(speed_dc.values())
+        for idx, i in enumerate(idx_speed):
+            if idx == 2:
+                speed = speed + f"{value[i]}|" + f"M{module}{self.direction[color]}"
+                speed0 = speed0 + f"0|" + f"M{module}{self.direction[color]}"
+            elif idx == 0:
+                speed = speed + f"{value[i]}|"
+                speed0 = speed0 + f"0|"
+            else:
+                speed = speed + f"{value[i]}|"
+                speed0 = speed0 + f"0|"
+        print(speed)
+        self.pub_direction.publish(speed)
+        QTimer.singleShot(5000, lambda:self.set_speed_to_zero(speed0))
    
     
     def imuCallback(self, imu_msg, choice):
@@ -563,6 +681,10 @@ class UI():
             self.manualHandle.lbl_manual_y_value.setText(str(ay))
     
 if __name__ == "__main__":
+    a = auto_start()
+    t1 = threading.Thread(target=a.run_roscore)
+    t1.start()
+    time.sleep(1)
     app = QApplication([])
     ui = UI()
     

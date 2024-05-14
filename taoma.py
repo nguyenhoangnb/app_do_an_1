@@ -3,9 +3,8 @@ import cv2
 import json
 
 qr_code = """
-    {"id":1}
+    {"id": 3}
 """
-
 qr = qrcode.QRCode(version=1, box_size=10, border=5)
 qr.add_data(qr_code)
 qr.make(fit=True)
