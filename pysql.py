@@ -83,14 +83,32 @@ class MY_DB():
         cursor = self.conn.cursor()
         query = f"UPDATE {table_name} SET amount = amount + 1 WHERE "
         conditions = []
-        values = []
         for key, value in data.items():
-            print(key,value)
-            conditions.append(f"{key} = {value}")
-            values.append(value)
+            conditions.append(f"{key} = ?")
         query += " AND ".join(conditions)
-        print(query)
+        cursor.execute(query, list(data.values()))
+        self.conn.commit()
+    def select_data(self, table_name, condition=None):
+        cursor = self.conn.cursor()
+        if condition:
+            query = f"SELECT * FROM {table_name} WHERE {condition};"
+        else:
+            query = f"SELECT * FROM {table_name};"
+
         cursor.execute(query)
+        result = cursor.fetchall()
+        result_list = result[0]
+        cursor.execute("PRAGMA table_info({})".format(table_name))
+        columns = cursor.fetchall()
+        column_names = [column[1] for column in columns]
+        dic = {}
+        for col, name in zip(result_list, column_names):
+            dic[name] = col
+        return dic
+    # def select_all_columns(self, table_name):
+    #     cursor = self.conn.cursor()
+        
+    #     return column_names
 
 #### code sử dụng classs MY_DB()
 #Create table

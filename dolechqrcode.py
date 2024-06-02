@@ -23,7 +23,7 @@ def classify_product(qr_code_data):
         print("Phân loại sản phẩm dựa trên thông tin từ mã QR code:", qr_code_data)
 
 def draw_dot_on_camera():
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(2)
     cap.set(3, 640)
     cap.set(4, 480)
 
@@ -39,10 +39,10 @@ def draw_dot_on_camera():
             data, bbox, _ = detector.detectAndDecode(frame)
             
             # Tọa độ của các điểm
-            center_point = (int(frame.shape[1] / 2), int(frame.shape[0] / 2))
-            center_point1 = (80, 385)
-            center_point1_2 = (540, 385)
-            center_point1_3 = (313, 50)
+            center_point = (356, 286)
+            center_point1 = (180, 375)
+            center_point1_2 = (521, 387)
+            center_point1_3 = (366, 83)
 
             # Vẽ chấm trên frame
             cv2.circle(frame, center_point, radius=5, color=(0, 255, 0), thickness=-1)
