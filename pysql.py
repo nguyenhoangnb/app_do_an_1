@@ -83,14 +83,11 @@ class MY_DB():
         cursor = self.conn.cursor()
         query = f"UPDATE {table_name} SET amount = amount + 1 WHERE "
         conditions = []
-        values = []
         for key, value in data.items():
-            print(key,value)
-            conditions.append(f"{key} = {value}")
-            values.append(value)
+            conditions.append(f"{key} = ?")
         query += " AND ".join(conditions)
-        print(query)
-        cursor.execute(query)
+        cursor.execute(query, list(data.values()))
+        self.conn.commit()
     def select_data(self, table_name, condition=None):
         cursor = self.conn.cursor()
         if condition:

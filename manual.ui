@@ -34,7 +34,7 @@
     <string notr="true">background-color:#fff;</string>
    </property>
    <property name="text">
-    <string>Chang speed</string>
+    <string>Change speed</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>

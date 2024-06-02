@@ -108,8 +108,7 @@ speed_module = {
 speed_high = {
     "red":[255, 255, 0],
     "green":[0, 255, 255],
-    "blue":[255, 0, 255
-            ]
+    "blue":[255, 0, 255]
 }
 
 speed_normal = {
@@ -172,6 +171,7 @@ class UI():
         self.direction = direction
         self.speed_module = speed_module
         self.speed_module_pred = speed_module
+        self.time = 8000
         #program UI
         self.programUi = QMainWindow()
         self.programHandle = programHandle(self.programUi)
@@ -212,11 +212,18 @@ class UI():
         self.topic_imu = "handsfree/imu"
         self.bridge = CvBridge()
         self.programUi.show()
-        self.timer = QTimer()
+        self.timer_auto = QTimer()
+        self.timer_auto_show = QTimer()
+        self.timer_manual = QTimer()
+        self.timer_manual_show = QTimer()
+        self.timer1 = [self.timer_auto, self.timer_auto_show]
+        self.timer2 = [ self.timer_manual, self.timer_manual_show]
+        
+        
         self.mode = 1
         self.capture = cv2.VideoCapture(0)
         self.check = False
-        rospy.init_node("img_node", anonymous=True)
+        rospy.init_node("app_node", anonymous=True)
         self.pub_speed_motor = rospy.Publisher(
             self.topic_speed_by_motor,
             String,
@@ -233,14 +240,27 @@ class UI():
             String,
             queue_size=10
         )
-     
-       
+    def stop_timer(self, idx=0):
+        
+        if idx == 2:
+            # self.capture = cv2.VideoCapture(0)
+            print(idx)
+            for time in self.timer1:
+                time.stop()
+        elif idx == 1:
+            print(idx)
+            # self.capture = cv2.VideoCapture(0)
+            for time in self.timer2:
+                time.stop()
+        # else: self.capture.release()
     def automation(self):
         self.programUi.hide()
         self.autoUI.show()
         self.programUi.close()
         self.autoworkUI.close()
         self.manualUI.close()
+        # self.stop_timer()
+        
         
         
     def startauto(self):
@@ -249,30 +269,30 @@ class UI():
         self.programUi.close()
         self.manualUI.close()
         self.autoworkUI.show()
-        self.timer_auto = QTimer()
+        self.stop_timer(1)
+        
         self.timer_auto.timeout.connect(lambda:self.insert_table_auto())
         self.timer_auto.start(100)  
-        
-        # self.show_img_automation()
-        
+
         self.sub_imu = rospy.Subscriber(
             self.topic_imu,
             Imu,
             lambda msg: self.imuCallback(msg,1)
         )
-        self.timer_auto_image = QTimer()
-        self.pub_out_timer = QTimer()
-        self.timer_auto_image.timeout.connect(self.show_img_automation)
-        self.timer_auto_image.start(1000//30) 
+        self.timer_auto_show.timeout.connect(self.show_img_automation)
+        self.timer_auto_show.start(1000//30) 
            
     def back_to_main(self):
         self.autoUI.hide()
         self.autoworkUI.hide()
         self.manualUI.hide()
-        self.programUi.show()
         self.autoUI.close()
         self.autoworkUI.close()
         self.manualUI.close()    
+        # self.stop_timer()
+        
+       
+        self.programUi.show()
     #set speed auto
     def set_speed_auto(self):
         text = self.autoHandle.cb_auto_speed.currentText()
@@ -302,6 +322,8 @@ class UI():
         self.autoworkUI.hide()
         self.autoUI.show()
         self.autoworkUI.close()
+        # self.stop_timer()
+        
         
     def manual(self):
         self.programUi.hide()
@@ -309,7 +331,8 @@ class UI():
         self.programUi.close()
         self.autoUI.close()
         self.autoworkUI.close()
-        self.timer_manual = QTimer()
+        self.stop_timer(2)
+                
         self.timer_manual.timeout.connect(lambda:self.insert_table_manual())
         self.timer_manual.start()
         self.manualHandle.btn_manual_continue.hide()
@@ -318,12 +341,9 @@ class UI():
             Imu,
             lambda msg: self.imuCallback(msg,2)
         )
-        # rospy.Timer(rospy.Duration(1), self.update_image)
-        self.timer_manual_show = QTimer()
         self.manualHandle.cbox_manual_function.currentIndexChanged.connect(self.manual_change)
-        self.timer_manual_show.timeout.connect(self.sub_callback_manual)
+        self.timer_manual_show.timeout.connect(self.show_image_manual)
         self.timer_manual_show.start(1000//30)  
-       
         self.manualHandle.btn_manual_set.clicked.connect(lambda: self.set_speed_manual(self.idx))
     
     def manual_change(self, idx):
@@ -370,16 +390,22 @@ class UI():
     def stop_manual(self):
         self.manualHandle.btn_manual_stop.hide()
         self.manualHandle.btn_manual_continue.show()
-        if self.idx == 0:
-            self.speed_module_pred = self.speed_module
-            self.speed_module = {key: 0 for key in self.speed_module}  
-            json_data = json.dumps(self.speed_module, ensure_ascii=False)
-            self.pub_speed_module.publish(json_data)
-        elif self.idx == 1:
-            self.speed_dc_pred = self.speed_dc
-            self.speed_dc = {key: 0 for key in self.speed_dc}  
-            json_data = json.dumps(self.speed_dc, ensure_ascii=False)
-            self.pub_speed_motor.publish(json_data)
+        # if self.idx == 0:
+        #     self.speed_module_pred = self.speed_module
+        #     self.speed_module = {key: 0 for key in self.speed_module}  
+        #     json_data = json.dumps(self.speed_module, ensure_ascii=False)
+        #     self.pub_speed_module.publish(json_data)
+        # elif self.idx == 1:
+        #     self.speed_dc_pred = self.speed_dc
+        #     self.speed_dc = {key: 0 for key in self.speed_dc}  
+        #     json_data = json.dumps(self.speed_dc, ensure_ascii=False)
+        #     self.pub_speed_motor.publish(json_data)
+        self.speed0 = f"M0{direction}0|0|0|M2{direction}0|0|0|"
+        self.pub_direction.publish(self.speed0)
+        self.speed0 = f"M0{direction}0|0|0|M1{direction}0|0|0|"
+        self.pub_direction.publish(self.speed0)
+        self.speed0 = f"M0{direction}0|0|0|M3{direction}0|0|0|"
+        self.pub_direction.publish(self.speed0)
 
     def continue_manual(self):
         self.manualHandle.btn_manual_stop.show()
@@ -397,35 +423,67 @@ class UI():
     def insert_table_auto(self):
         mydb = MY_DB()
         mydb.connect("data.db")
+
         self.autoworkHandle.tbl_auto_quantity.setRowCount(0)
         self.result = mydb.select_all("consumer_goods")
+
         label = ["id", "color", "amount"]
-        label1 = mydb.get_table_columns("consumer_goods") 
+        label1 = mydb.get_table_columns("consumer_goods")
+        
+        dic_data = []
+
         self.autoworkHandle.tbl_auto_quantity.setColumnCount(len(label))
         self.autoworkHandle.tbl_auto_quantity.setHorizontalHeaderLabels(label)
+            
         for row_num, row_data in enumerate(self.result):
-            self.autoworkHandle.tbl_auto_quantity.insertRow(row_num)
+            dic = {}
             for col_num, col_data in enumerate(row_data):
-                if label1[col_num] == "color" or label1[col_num] == "id" or label1[col_num] == "amount":
-                    # print(str(label1[col_num])+" " + str(col_data))
-                    self.autoworkHandle.tbl_auto_quantity.setItem(row_num, col_num, QTableWidgetItem(str(col_data))) 
+                if label1[col_num] in label:
+                    dic[label1[col_num]] = col_data
+            dic_data.append(dic)
+        # print(dic_data)
+        for row_num, row_data in enumerate(dic_data):
+            self.autoworkHandle.tbl_auto_quantity.insertRow(row_num)
+            # print(row_data)
+            for col_num, col_data in enumerate(label):
+                # print(col_data)
+                self.autoworkHandle.tbl_auto_quantity.setItem(row_num, col_num, QTableWidgetItem(str(row_data[col_data])))
+        
         mydb.close()
+
+
     def insert_table_manual(self):
         mydb = MY_DB()
         mydb.connect("data.db")
+
         self.manualHandle.tbl_manual_quantity.setRowCount(0)
         self.result = mydb.select_all("consumer_goods")
+
         label = ["id", "color", "amount"]
-        label1 = mydb.get_table_columns("consumer_goods")  
-        # print(label1)
+        label1 = mydb.get_table_columns("consumer_goods")
+        
+        dic_data = []
+
         self.manualHandle.tbl_manual_quantity.setColumnCount(len(label))
         self.manualHandle.tbl_manual_quantity.setHorizontalHeaderLabels(label)
+            
         for row_num, row_data in enumerate(self.result):
-            self.manualHandle.tbl_manual_quantity.insertRow(row_num)
+            dic = {}
             for col_num, col_data in enumerate(row_data):
-                if label1[col_num] == "color" or label1[col_num] == "id" or label1[col_num] == "amount":
-                    self.manualHandle.tbl_manual_quantity.setItem(row_num, col_num, QTableWidgetItem(str(col_data))) 
+                if label1[col_num] in label:
+                    dic[label1[col_num]] = col_data
+            dic_data.append(dic)
+        # print(dic_data)
+        for row_num, row_data in enumerate(dic_data):
+            self.manualHandle.tbl_manual_quantity.insertRow(row_num)
+            # print(row_data)
+            for col_num, col_data in enumerate(label):
+                # print(col_data)
+                self.manualHandle.tbl_manual_quantity.setItem(row_num, col_num, QTableWidgetItem(str(row_data[col_data])))
+        
         mydb.close()
+
+
         
     def kiem_tra(self,xau):
         return bool(re.match(r'^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$', xau))
@@ -434,10 +492,12 @@ class UI():
         ret, cv_image = self.capture.read()
         if ret:
             cv_image = cv2.flip(cv_image, 1)
+            
             cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
             h, w, ch = cv_image.shape
             bytes_per_line = ch * w
-            self.check = self.process_image(cv_image)
+            self.check, cv_image = self.process_image(cv_image)
+            
             qt_img = QImage(cv_image.data, w, h, bytes_per_line, QImage.Format_RGB888)
             pixmap = QPixmap.fromImage(qt_img)
             self.autoworkHandle.lbl_img.setPixmap(pixmap.scaled(self.autoworkHandle.lbl_img.size(), Qt.KeepAspectRatio))
@@ -474,9 +534,7 @@ class UI():
                         labels_inf[index].setWordWrap(True)
                 self.check = False
  
-    def sub_callback_manual(self):
-        # cv_image = self.bridge.imgmsg_to_cv2(image)
-        # capture = cv2.VideoCapture("/dev/video0")
+    def show_image_manual(self):
         ret, cv_image = self.capture.read()
         if ret:
             cv_image = cv2.flip(cv_image, 1)
@@ -485,13 +543,13 @@ class UI():
             h, w, ch = cv_image.shape
             bytes_per_line = ch * w
             
-            self.check = self.process_image(cv_image)
+            self.check, cv_image = self.process_image(cv_image)
             qt_img = QImage(cv_image.data, w, h, bytes_per_line, QImage.Format_RGB888)
             pixmap = QPixmap.fromImage(qt_img)
             self.manualHandle.lbl_img.setPixmap(pixmap.scaled(self.manualHandle.lbl_img.size(), Qt.KeepAspectRatio))
             
             if self.check:
-                self.classify_product(self.data)
+                # self.classify_product(self.data)
                 mydb = MY_DB()
                 mydb.connect("data.db")
                 if not mydb.check_value_exist("consumer_goods","id",self.data["id"]) and self.data["id"]!=0:
@@ -522,40 +580,48 @@ class UI():
                 self.check = False
             
     def process_image(self, frame):
-        frame_flipped = cv2.flip(frame, 1)
+        # frame_flipped = cv2.flip(frame, 1)
         detector = cv2.QRCodeDetector()
-        data, bbox, _ = detector.detectAndDecode(frame_flipped)
+        data, bbox, _ = detector.detectAndDecode(frame)      
         check = False
         mydb = MY_DB()
         mydb.connect("data.db")
         if data:
             data1 = json.loads(data)
-            # print(data1)
             self.data = mydb.select_data("consumer_goods", f"id = {data1['id']}")
-            print(self.data)
+            print("data",self.data)
+            bbox = bbox[0]
+            bbox = bbox.astype(int)
+            cv2.polylines(frame, [bbox], True, (0, 255, 0), 2)
+            
+            M = cv2.moments(bbox)
+            if M["m00"] != 0:
+                center_x = int(M["m10"] / M["m00"])
+                center_y = int(M["m01"] / M["m00"])
+                # Vẽ tâm của mã QR code
+                cv2.circle(frame, (center_x, center_y), 5, (0, 0, 255), -1)
+                print("Tọa độ tâm:", center_x, center_y)     
         mydb.close()
         if data and self.compare_data() :
             self.prev_data = self.data
             check = True
 
         if bbox is not None:
-            # print("Waiting for QR code. Product Information:")
-            self.prev_data = pre_data
-            # pass
+            pass
 
-        return check
+        return check, frame
 
     def compare_data(self):
       
         for key in self.data:
-            if self.data[key] != self.prev_data[key]:
+            if key!="amount" and self.data[key] != self.prev_data[key]:
+        # if self.data['id'] != self.prev_data['id']:
                 return True
         return False
 
     def classify_product(self, qr_code_data :dict):
         module = 0
         color = qr_code_data.get("color")
-        print(color)
         # print(qr_code_data)
         if qr_code_data:
             # print("Classify product base on qrcode:", qr_code_data)
@@ -586,12 +652,12 @@ class UI():
             print("No Qrcode found or unable to read Qrcode")
     def set_speed_to_zero(self, speed0):
         self.pub_direction.publish(speed0)
-        print("PUBLISH 0")
+        # print("PUBLISH 0")
     def dic_module_1(self):
         idx_speed = [0, 1, 2, 3, 4, 5]
         speed = "M0"
         color = "red"
-        module = 1
+        module = 3
         speed += f"{self.direction[color]}"
         speed0 = speed
         value = list(speed_dc.values())
@@ -605,14 +671,9 @@ class UI():
             else:
                 speed = speed + f"{value[i]}|"
                 speed0 = speed0 + f"0|"
-        # speed +="|"
-        # speed0 +="|"
-        print(speed)
-        # self.speed0 = f"M0{self.direction[color]}0|0|0|M{module}{self.direction[color]}0|0|0|"
-        
-        print(speed0)
+        speed = "M3100255|255|255|"
         self.pub_direction.publish(speed)
-        QTimer.singleShot(5000, lambda:self.set_speed_to_zero(speed0))
+        QTimer.singleShot(self.time, lambda:self.set_speed_to_zero(speed0))
         
         
             
@@ -635,9 +696,9 @@ class UI():
             else:
                 speed = speed + f"{value[i]}|"
                 speed0 = speed0 + f"0|"
-        print(speed)
+        # print(speed)
         self.pub_direction.publish(speed)
-        QTimer.singleShot(5000, lambda:self.set_speed_to_zero(speed0))
+        QTimer.singleShot(self.time, lambda:self.set_speed_to_zero(speed0))
     
     def dic_module_3(self):
         idx_speed = [0, 1, 2, 9, 10, 11]
@@ -657,9 +718,9 @@ class UI():
             else:
                 speed = speed + f"{value[i]}|"
                 speed0 = speed0 + f"0|"
-        print(speed)
+        # print(speed)
         self.pub_direction.publish(speed)
-        QTimer.singleShot(5000, lambda:self.set_speed_to_zero(speed0))
+        QTimer.singleShot(self.time, lambda:self.set_speed_to_zero(speed0))
    
     
     def imuCallback(self, imu_msg, choice):
