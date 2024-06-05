@@ -657,7 +657,7 @@ class UI():
         idx_speed = [0, 1, 2, 3, 4, 5]
         speed = "M0"
         color = "red"
-        module = 3
+        module = 1
         speed += f"{self.direction[color]}"
         speed0 = speed
         value = list(speed_dc.values())
@@ -671,7 +671,7 @@ class UI():
             else:
                 speed = speed + f"{value[i]}|"
                 speed0 = speed0 + f"0|"
-        speed = "M3100255|255|255|"
+        # speed = "M3100255|255|255|"
         self.pub_direction.publish(speed)
         QTimer.singleShot(self.time, lambda:self.set_speed_to_zero(speed0))
         
